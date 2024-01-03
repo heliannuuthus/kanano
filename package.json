@@ -10,8 +10,12 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@lexical/react": "^0.12.5",
+    "@lexical/utils": "^0.12.5",
     "@tauri-apps/api": "^1.5.2",
-    "antd": "^5.12.5",
+    "lexical": "^0.12.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
