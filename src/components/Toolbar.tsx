@@ -1,27 +1,33 @@
+import React, { Dispatch, ReactNode, useState } from "react";
+import { H1, H2, Quote, Text } from "./Icons";
 import {
-  Box,
+  BoldOutlined,
+  ItalicOutlined,
+  StrikethroughOutlined,
+} from "@ant-design/icons";
+import {
   Button,
-  MenuItem,
-  Select,
-  Popper,
-  Fade,
+  Dropdown,
   Divider,
-  SelectChangeEvent,
-  FormControl,
-  styled,
-  IconButton,
-} from "@mui/material";
-import React, { Dispatch, useState } from "react";
-import { H1, H2, Quote } from "./Icons";
-import { FormatBold, FormatClear, FormatItalic } from "@mui/icons-material";
-
+  Flex,
+  Popover,
+  Space,
+  MenuProps,
+  ConfigProvider,
+} from "antd";
+import { BaseOptionType } from "antd/es/select";
 type FontSetting = {
   icon: JSX.Element;
   title: string;
   value: string;
 };
 
-export const FontSizeSettings: Record<string, FontSetting> = {
+const FontHeaderSettings: Record<string, FontSetting> = {
+  text: {
+    icon: <Text />,
+    title: "正文",
+    value: "text",
+  },
   h1: {
     icon: <H1 />,
     title: "一级标题",
@@ -34,7 +40,7 @@ export const FontSizeSettings: Record<string, FontSetting> = {
   },
 };
 
-export const FontTypeSettings: Record<string, FontSetting> = {
+const FontTypeSettings: Record<string, FontSetting> = {
   reference: {
     icon: <Quote />,
     title: "引用",
@@ -42,68 +48,69 @@ export const FontTypeSettings: Record<string, FontSetting> = {
   },
 };
 
+const MergeSettings: Record<string, FontSetting> = {
+  ...FontHeaderSettings,
+  ...FontTypeSettings,
+};
+
+const items: MenuProps["items"] = [
+  ...Object.values(FontHeaderSettings).map((val) => {
+    return {
+      icon: val.icon,
+      label: val.title,
+      key: val.value,
+    };
+  }),
+  { type: "divider" },
+  ...Object.values(FontTypeSettings).map((val) => {
+    return {
+      icon: val.icon,
+      label: val.title,
+      key: val.value,
+    };
+  }),
+];
+
 export const FontSetting = ({
   setFontSetting: setFontSetting,
 }: {
   setFontSetting: Dispatch<string>;
 }) => {
-  const [value, setValue] = useState<string | null>(null);
+  const defaultSelectedKeys = ["text"];
+  const [value, setValue] = useState<JSX.Element | null>(
+    <a>{MergeSettings[defaultSelectedKeys[0]].icon}</a>
+  );
+
+  const onSelect: MenuProps["onSelect"] = (selector) => {
+    setValue(<a>{MergeSettings[selector.key].icon}</a>);
+  };
 
   return (
-    <Select
-      autoWidth
-      id="kanano-font-setting"
-      value={FontSizeSettings[value || ""]?.value || ""}
-      onChange={(event: SelectChangeEvent) => {
-        setValue(event.target.value as string);
-        setFontSetting(event.target.value as string);
+    <Dropdown
+      autoFocus
+      menu={{
+        defaultSelectedKeys,
+        selectable: true,
+        items,
+        onSelect,
       }}
     >
-      {Object.keys(FontSizeSettings).map((key: string, index: number) => {
-        return (
-          <MenuItem value={key} key={index}>
-            {FontSizeSettings[key].title}
-          </MenuItem>
-        );
-      })}
-      <Divider />
-      {Object.keys(FontTypeSettings).map((key: string, index: number) => {
-        console.log(key);
-        return (
-          <div style={{ display: "flex" }} key={index}>
-            {FontTypeSettings[key].icon}
-            <Divider />
-            <MenuItem value={key}>{FontTypeSettings[key].title}</MenuItem>
-          </div>
-        );
-      })}
-    </Select>
+      {value}
+    </Dropdown>
   );
 };
 
-export const Bold = ({ enabled }: { enabled: boolean }) => {
-  return (
-    <IconButton size="small">
-      <FormatBold fontSize="small" />
-    </IconButton>
-  );
-};
+export const Bold = ({ enabled }: { enabled: boolean }) => (
+  <Button size="small" icon={<BoldOutlined />} />
+);
 
-export const Clear = ({ enabled }: { enabled: boolean }) => {
-  return (
-    <IconButton size="small">
-      <FormatClear fontSize="small" />
-    </IconButton>
-  );
-};
+export const Strikethrough = ({ enabled }: { enabled: boolean }) => (
+  <Button size="small" icon={<StrikethroughOutlined />} />
+);
 
-export const Italic = ({ enabled }: { enabled: boolean }) => {
-  return (
-    <IconButton size="small">
-      <FormatItalic fontSize="small" />
-    </IconButton>
-  );
-};
+export const Italic = ({ enabled }: { enabled: boolean }) => (
+  <Button size="small" icon={<ItalicOutlined />} />
+);
 
 export const Toolbar = ({ anchor }: { anchor: HTMLElement | null }) => {
   const canBeOpen = Boolean(anchor);
@@ -112,27 +119,22 @@ export const Toolbar = ({ anchor }: { anchor: HTMLElement | null }) => {
   const [fontSetting, setFontSetting] = useState<string | null>(null);
 
   return (
-    <Popper style={{ marginTop: "15px" }} id={id} open={Boolean(anchor)} anchorEl={anchor} transition>
-      {({ TransitionProps }) => (
-        <Fade {...TransitionProps} timeout={350}>
-          <Box sx={{
-            display: 'flex',
-            alignItems: 'center',
-            width: 'fit-content',
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            borderRadius: 1,
-            '& hr': {
-              mx: 0.5,
-            },
-          }}>
-            <FontSetting setFontSetting={setFontSetting} />
-            <Divider orientation="vertical" flexItem />
-            <Bold enabled />
-            <Clear enabled />
-            <Italic enabled />
-          </Box>
-        </Fade>
-      )}
-    </Popper>
+    <ConfigProvider
+      theme={{
+        components: {
+          Dropdown: {},
+        },
+      }}
+    >
+      <Popover id={id} open={Boolean(anchor)}>
+        <>
+          <FontSetting setFontSetting={setFontSetting} />
+          <Divider type="vertical" />
+          <Bold enabled />
+          <Strikethrough enabled />
+          <Italic enabled />
+        </>
+      </Popover>
+    </ConfigProvider>
   );
 };
