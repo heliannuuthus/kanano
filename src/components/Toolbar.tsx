@@ -1,5 +1,5 @@
 import React, { Dispatch, ReactNode, useState } from "react";
-import { H1, H2, Quote, Text } from "./Icons";
+import { Blod, H1, H2, Italic, Quote, Strikethrough, Text } from "./Icons";
 import {
   BoldOutlined,
   ItalicOutlined,
@@ -16,6 +16,7 @@ import {
   ConfigProvider,
 } from "antd";
 import { BaseOptionType } from "antd/es/select";
+import CheckableTag from "antd/es/tag/CheckableTag";
 type FontSetting = {
   icon: JSX.Element;
   title: string;
@@ -100,24 +101,15 @@ export const FontSetting = ({
   );
 };
 
-export const Bold = ({ enabled }: { enabled: boolean }) => (
-  <Button size="small" icon={<BoldOutlined />} />
-);
-
-export const Strikethrough = ({ enabled }: { enabled: boolean }) => (
-  <Button size="small" icon={<StrikethroughOutlined />} />
-);
-
-export const Italic = ({ enabled }: { enabled: boolean }) => (
-  <Button size="small" icon={<ItalicOutlined />} />
-);
-
 export const Toolbar = ({ anchor }: { anchor: HTMLElement | null }) => {
-  const canBeOpen = Boolean(anchor);
-  const id = canBeOpen ? "kanano-toolbar" : undefined;
-
   const [fontSetting, setFontSetting] = useState<string | null>(null);
-
+  const [selectSettings, setSelectSettings] = useState<string[]>([]);
+  const handleChange = (tag: string, checked: boolean) => {
+    const nextSelectedTags = checked
+      ? [...selectSettings, tag]
+      : selectSettings.filter((t) => t !== tag);
+    setSelectSettings(nextSelectedTags);
+  };
   return (
     <ConfigProvider
       theme={{
@@ -126,13 +118,37 @@ export const Toolbar = ({ anchor }: { anchor: HTMLElement | null }) => {
         },
       }}
     >
-      <Popover id={id} open={Boolean(anchor)}>
+      <Popover placement="top" arrow={false} open={Boolean(anchor)}>
         <>
-          <FontSetting setFontSetting={setFontSetting} />
+          <CheckableTag
+            key={"fontsetting"}
+            checked={selectSettings.includes("fontsetting")}
+            onChange={(checked) => handleChange("fontsetting", checked)}
+          >
+            <FontSetting setFontSetting={setFontSetting} />
+          </CheckableTag>
           <Divider type="vertical" />
-          <Bold enabled />
-          <Strikethrough enabled />
-          <Italic enabled />
+          <CheckableTag
+            key={"blod"}
+            checked={selectSettings.includes("blod")}
+            onChange={(checked) => handleChange("blod", checked)}
+          >
+            <Blod />
+          </CheckableTag>
+          <CheckableTag
+            key={"strikethrough"}
+            checked={selectSettings.includes("strikethrough")}
+            onChange={(checked) => handleChange("strikethrough", checked)}
+          >
+            <Strikethrough />
+          </CheckableTag>
+          <CheckableTag
+            key={"italic"}
+            checked={selectSettings.includes("italic")}
+            onChange={(checked) => handleChange("italic", checked)}
+          >
+            <Italic />
+          </CheckableTag>
         </>
       </Popover>
     </ConfigProvider>
