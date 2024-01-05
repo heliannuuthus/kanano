@@ -5,6 +5,7 @@ import {
   $getSelection,
   $isRangeSelection,
   $isRootOrShadowRoot,
+  CLICK_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
   ElementNode,
   RangeSelection,
@@ -21,54 +22,16 @@ export default function ToolbarPlugin({
 }) {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
+  const [selectStart, setSelectStart] = useState(false);
+  const [selectEnd, setSelectEnd] = useState(false);
 
-  const $updateToolbar = useCallback(() => {
-    const selection = $getSelection();
-    console.log(selection);
-
-    if ($isRangeSelection(selection)) {
-      if (
-        (selection as RangeSelection).anchor.offset ==
-        (selection as RangeSelection).focus.offset
-      ) {
-        setIsShowToolbar(null);
-        return;
-      }
-
-      const anchorNode: ElementNode = (
-        selection as RangeSelection
-      ).anchor.getNode();
-      let element =
-        anchorNode.getKey() === "root"
-          ? anchorNode
-          : $findMatchingParent(anchorNode, (e) => {
-              const parent = e.getParent();
-              return parent !== null && $isRootOrShadowRoot(parent);
-            });
-
-      if (element === null) {
-        element = anchorNode.getTopLevelElementOrThrow() as ElementNode;
-      }
-
-      const elementKey = element.getKey();
-      const elementDOM = activeEditor.getElementByKey(elementKey);
-
-      if (elementDOM != null) {
-        setIsShowToolbar(elementDOM);
-      }
-    }
-    const context = selection?.getTextContent();
-    if (context && context.length > 0) {
-      // popover
-      console.log(context);
-    }
-  }, [activeEditor]);
+  const $updateToolbar = useCallback(() => {}, [activeEditor]);
 
   useEffect(() => {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       (_payload, newEditor) => {
-        $updateToolbar();
+        setSelectStart(true);
         setActiveEditor(newEditor);
         return false;
       },
@@ -76,5 +39,42 @@ export default function ToolbarPlugin({
     );
   }, [editor, $updateToolbar]);
 
-  return <div></div>;
+  useEffect(() => {
+    return editor.registerCommand(
+      CLICK_COMMAND,
+      (_payload, newEditor) => {
+        setSelectEnd(true);
+        const selection = $getSelection();
+        console.log(selection);
+        if ($isRangeSelection(selection)) {
+          if (
+            (selection as RangeSelection).anchor.offset ==
+            (selection as RangeSelection).focus.offset
+          ) {
+            setSelectEnd(false);
+            setSelectStart(false);
+            setIsShowToolbar(null);
+          } else {
+            if (selectStart && selectEnd) {
+              const anchorNode: ElementNode = (
+                selection as RangeSelection
+              ).anchor.getNode();
+              const elementDOM = activeEditor.getElementByKey(
+                anchorNode.getKey()
+              );
+              console.log("end");
+              setIsShowToolbar(elementDOM);
+            }
+          }
+        }
+        console.log(selectStart);
+        console.log(selectEnd);
+        setActiveEditor(newEditor);
+        return true;
+      },
+      COMMAND_PRIORITY_CRITICAL
+    );
+  }, [editor]);
+
+  return <></>;
 }

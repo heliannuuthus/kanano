@@ -12,6 +12,7 @@ import ToolbarPlugin from "./lexical/ToolbarPlugin";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { EditorState } from "lexical";
 import { Toolbar } from "./components/Toolbar";
+import { ConfigProvider } from "antd";
 
 const theme = {};
 
@@ -45,14 +46,14 @@ const Editor = () => {
     setAnchorEl(element);
   };
 
-  const open = Boolean(anchor);
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <PlainTextPlugin
         contentEditable={
-          <div>
-            <ContentEditable />
-          </div>
+          <Toolbar
+            showIt={Boolean(anchor)}
+            anchor={<ContentEditable className="kanano" />}
+          />
         }
         placeholder={<div></div>}
         ErrorBoundary={LexicalErrorBoundary}
@@ -61,7 +62,19 @@ const Editor = () => {
         setIsShowToolbar={showToolbar}
         setIsLinkEditMode={(_old: boolean) => true}
       />
-      <Toolbar anchor={anchor} />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#cfdaf8",
+            colorPrimaryHover: "#ced8f9",
+          },
+          components: {
+            Menu: {
+              horizontalItemSelectedBg: "#b9d4f9",
+            },
+          },
+        }}
+      ></ConfigProvider>
       <HistoryPlugin />
       <AutoFocusPlugin />
       <OnChangePlugin onChange={onChange} />

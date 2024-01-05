@@ -14,11 +14,13 @@ import {
   Space,
   MenuProps,
   ConfigProvider,
+  Menu,
 } from "antd";
 import { BaseOptionType } from "antd/es/select";
 import CheckableTag from "antd/es/tag/CheckableTag";
+import { display } from "@mui/system";
 type FontSetting = {
-  icon: JSX.Element;
+  icon: ReactNode;
   title: string;
   value: string;
 };
@@ -78,7 +80,7 @@ export const FontSetting = ({
   setFontSetting: Dispatch<string>;
 }) => {
   const defaultSelectedKeys = ["text"];
-  const [value, setValue] = useState<JSX.Element | null>(
+  const [value, setValue] = useState<ReactNode | null>(
     <a>{MergeSettings[defaultSelectedKeys[0]].icon}</a>
   );
 
@@ -101,56 +103,78 @@ export const FontSetting = ({
   );
 };
 
-export const Toolbar = ({ anchor }: { anchor: HTMLElement | null }) => {
+type ToolbarComponent = {
+  key: string;
+  tooltip?: string;
+  component?: ReactNode;
+};
+type MenuItem = Required<MenuProps>["items"][number];
+
+export const Toolbar = ({
+  anchor,
+  showIt,
+}: {
+  anchor: ReactNode;
+  showIt: boolean;
+}) => {
   const [fontSetting, setFontSetting] = useState<string | null>(null);
-  const [selectSettings, setSelectSettings] = useState<string[]>([]);
-  const handleChange = (tag: string, checked: boolean) => {
-    const nextSelectedTags = checked
-      ? [...selectSettings, tag]
-      : selectSettings.filter((t) => t !== tag);
-    setSelectSettings(nextSelectedTags);
+  const [selectedSettings, setSelectSettings] = useState<string[]>([]);
+  const handleSelected = ({ selectedKeys }: { selectedKeys: string[] }) => {
+    setSelectSettings(selectedKeys);
   };
+
+  const handleDeselect = ({ selectedKeys }: { selectedKeys: string[] }) => {
+    setSelectSettings(selectedKeys);
+  };
+
+  const toolbarComponents: ToolbarComponent[] = [
+    {
+      key: "fontSetting",
+      component: <FontSetting setFontSetting={setFontSetting} />,
+      tooltip: "font",
+    },
+    { key: "divider" },
+    {
+      key: "blod",
+      component: <Blod />,
+      tooltip: "",
+    },
+    {
+      key: "strikethrough",
+      component: <Strikethrough />,
+      tooltip: "",
+    },
+    {
+      key: "italic",
+      component: <Italic />,
+      tooltip: "",
+    },
+  ];
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Dropdown: {},
-        },
-      }}
+    <Dropdown
+      dropdownRender={() => (
+        <Menu
+          style={{ display: "flex", maxWidth: "300px" }}
+          multiple
+          selectable
+          onSelect={handleSelected}
+          onDeselect={handleDeselect}
+          selectedKeys={selectedSettings}
+          items={toolbarComponents.map((value) => {
+            return value.key === "divider"
+              ? { type: "divider" }
+              : ({
+                  label: value.component,
+                  key: value.key,
+                } as MenuItem);
+          })}
+        ></Menu>
+      )}
+      trigger={["contextMenu", "click"]}
+      arrow={false}
+      open={showIt}
     >
-      <Popover placement="top" arrow={false} open={Boolean(anchor)}>
-        <>
-          <CheckableTag
-            key={"fontsetting"}
-            checked={selectSettings.includes("fontsetting")}
-            onChange={(checked) => handleChange("fontsetting", checked)}
-          >
-            <FontSetting setFontSetting={setFontSetting} />
-          </CheckableTag>
-          <Divider type="vertical" />
-          <CheckableTag
-            key={"blod"}
-            checked={selectSettings.includes("blod")}
-            onChange={(checked) => handleChange("blod", checked)}
-          >
-            <Blod />
-          </CheckableTag>
-          <CheckableTag
-            key={"strikethrough"}
-            checked={selectSettings.includes("strikethrough")}
-            onChange={(checked) => handleChange("strikethrough", checked)}
-          >
-            <Strikethrough />
-          </CheckableTag>
-          <CheckableTag
-            key={"italic"}
-            checked={selectSettings.includes("italic")}
-            onChange={(checked) => handleChange("italic", checked)}
-          >
-            <Italic />
-          </CheckableTag>
-        </>
-      </Popover>
-    </ConfigProvider>
+      {anchor}
+    </Dropdown>
   );
 };
