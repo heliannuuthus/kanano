@@ -1,5 +1,5 @@
-import Icon from "@ant-design/icons/lib/components/Icon";
-
+import { SvgIcon } from "@mui/material";
+import { ReactNode } from "react";
 export const Text = () => <Icon component={text} />;
 export const H1 = () => <Icon component={h1} />;
 export const H2 = () => <Icon component={h2} />;
@@ -13,13 +13,18 @@ export const Italic = () => <Icon component={italic} />;
 export const Strikethrough = () => <Icon component={strikethrough} />;
 export const Underline = () => <Icon component={underline} />;
 export const FontColor = () => <Icon component={fontColor} />;
-export const ListOrder = () => <Icon component={ListOrder} />;
+export const ListOrder = () => <Icon component={listOrder} />;
 export const ListAdd = () => <Icon component={listAdd} />;
 export const TextAlignCenter = () => <Icon component={textAlignCenter} />;
 export const TextAlignLeft = () => <Icon component={textAlignLeft} />;
 export const TextAlignRight = () => <Icon component={textAlignRight} />;
 export const TextAlignJustify = () => <Icon component={textAlignJustify} />;
-const text = () => (
+
+export const Icon = ({ component }: { component: ReactNode }) => {
+  return <SvgIcon>{component}</SvgIcon>;
+};
+
+const text = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -46,8 +51,8 @@ const text = () => (
       p-id="1756"
     ></path>
   </svg>
-);
-const h1 = () => (
+) as ReactNode;
+const h1 = (
   <svg
     viewBox="0 0 1024 1024"
     xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +70,7 @@ const h1 = () => (
   </svg>
 );
 
-const h2 = () => (
+const h2 = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -84,7 +89,7 @@ const h2 = () => (
   </svg>
 );
 
-const h3 = () => (
+const h3 = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -103,7 +108,7 @@ const h3 = () => (
   </svg>
 );
 
-const h4 = () => (
+const h4 = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -127,7 +132,7 @@ const h4 = () => (
   </svg>
 );
 
-const h5 = () => (
+const h5 = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -146,7 +151,7 @@ const h5 = () => (
   </svg>
 );
 
-const h6 = () => (
+const h6 = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -165,30 +170,28 @@ const h6 = () => (
   </svg>
 );
 
-const quote = () => {
-  return (
-    <svg
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="3318"
-      width="24"
-      height="24"
-    >
-      <path
-        d="M554.666667 512a42.666667 42.666667 0 0 1 42.666666-42.666667h170.666667a85.333333 85.333333 0 0 1 85.333333 85.333334v128a85.333333 85.333333 0 0 1-85.333333 85.333333h-128a85.333333 85.333333 0 0 1-85.333333-85.333333v-170.666667z m85.333333 42.666667v128h128v-128h-128zM170.666667 512a42.666667 42.666667 0 0 1 42.666666-42.666667h170.666667a85.333333 85.333333 0 0 1 85.333333 85.333334v128a85.333333 85.333333 0 0 1-85.333333 85.333333H256a85.333333 85.333333 0 0 1-85.333333-85.333333v-170.666667z m85.333333 42.666667v128h128v-128H256z"
-        fill="#14181F"
-        p-id="3319"
-      ></path>
-      <path
-        d="M725.333333 341.333333a85.333333 85.333333 0 0 0-85.333333 85.333334v85.333333a42.666667 42.666667 0 1 1-85.333333 0v-85.333333a170.666667 170.666667 0 0 1 170.666666-170.666667 42.666667 42.666667 0 1 1 0 85.333333zM341.333333 341.333333a85.333333 85.333333 0 0 0-85.333333 85.333334v85.333333a42.666667 42.666667 0 1 1-85.333333 0v-85.333333a170.666667 170.666667 0 0 1 170.666666-170.666667 42.666667 42.666667 0 1 1 0 85.333333z"
-        fill="#14181F"
-        p-id="3320"
-      ></path>
-    </svg>
-  );
-};
-const listAdd = () => (
+const quote = (
+  <svg
+    viewBox="0 0 1024 1024"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    p-id="3318"
+    width="24"
+    height="24"
+  >
+    <path
+      d="M554.666667 512a42.666667 42.666667 0 0 1 42.666666-42.666667h170.666667a85.333333 85.333333 0 0 1 85.333333 85.333334v128a85.333333 85.333333 0 0 1-85.333333 85.333333h-128a85.333333 85.333333 0 0 1-85.333333-85.333333v-170.666667z m85.333333 42.666667v128h128v-128h-128zM170.666667 512a42.666667 42.666667 0 0 1 42.666666-42.666667h170.666667a85.333333 85.333333 0 0 1 85.333333 85.333334v128a85.333333 85.333333 0 0 1-85.333333 85.333333H256a85.333333 85.333333 0 0 1-85.333333-85.333333v-170.666667z m85.333333 42.666667v128h128v-128H256z"
+      fill="#14181F"
+      p-id="3319"
+    ></path>
+    <path
+      d="M725.333333 341.333333a85.333333 85.333333 0 0 0-85.333333 85.333334v85.333333a42.666667 42.666667 0 1 1-85.333333 0v-85.333333a170.666667 170.666667 0 0 1 170.666666-170.666667 42.666667 42.666667 0 1 1 0 85.333333zM341.333333 341.333333a85.333333 85.333333 0 0 0-85.333333 85.333334v85.333333a42.666667 42.666667 0 1 1-85.333333 0v-85.333333a170.666667 170.666667 0 0 1 170.666666-170.666667 42.666667 42.666667 0 1 1 0 85.333333z"
+      fill="#14181F"
+      p-id="3320"
+    ></path>
+  </svg>
+);
+const listAdd = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -211,7 +214,7 @@ const listAdd = () => (
     ></path>
   </svg>
 );
-const textAlignCenter = () => (
+const textAlignCenter = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -229,7 +232,7 @@ const textAlignCenter = () => (
     ></path>
   </svg>
 );
-const textAlignLeft = () => (
+const textAlignLeft = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -247,7 +250,7 @@ const textAlignLeft = () => (
     ></path>
   </svg>
 );
-const textAlignRight = () => (
+const textAlignRight = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -265,7 +268,7 @@ const textAlignRight = () => (
     ></path>
   </svg>
 );
-const textAlignJustify = () => (
+const textAlignJustify = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -283,7 +286,7 @@ const textAlignJustify = () => (
     ></path>
   </svg>
 );
-const underline = () => (
+const underline = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -301,7 +304,7 @@ const underline = () => (
     ></path>
   </svg>
 );
-const listOrder = () => (
+const listOrder = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -320,7 +323,7 @@ const listOrder = () => (
   </svg>
 );
 
-const italic = () => (
+const italic = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -344,7 +347,7 @@ const italic = () => (
   </svg>
 );
 
-const blod = () => (
+const blod = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -372,7 +375,7 @@ const blod = () => (
     ></path>
   </svg>
 );
-const strikethrough = () => (
+const strikethrough = (
   <svg
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -395,36 +398,34 @@ const strikethrough = () => (
     ></path>
   </svg>
 );
-const fontColor = () => {
-  return (
-    <svg
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="3534"
-      width="24"
-      height="24"
-    >
-      <path
-        d="M810.538667 897.152l-596.181334-3.072 0.512-85.333333 596.181334 3.072-0.512 85.333333z"
-        fill="#000000"
-        p-id="3535"
-      ></path>
-      <path
-        d="M492.501333 170.666667h45.653334L305.792 725.589333H213.162667L446.848 170.666667h45.653333z"
-        fill="#000000"
-        p-id="3536"
-      ></path>
-      <path
-        d="M532.650667 170.666667h-45.653334l232.405334 554.922666h92.586666L578.346667 170.666667h-45.653334z"
-        fill="#000000"
-        p-id="3537"
-      ></path>
-      <path
-        d="M342.016 512h341.333333v85.333333h-341.333333v-85.333333z"
-        fill="#000000"
-        p-id="3538"
-      ></path>
-    </svg>
-  );
-};
+const fontColor = (
+  <svg
+    viewBox="0 0 1024 1024"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    p-id="3534"
+    width="24"
+    height="24"
+  >
+    <path
+      d="M810.538667 897.152l-596.181334-3.072 0.512-85.333333 596.181334 3.072-0.512 85.333333z"
+      fill="#000000"
+      p-id="3535"
+    ></path>
+    <path
+      d="M492.501333 170.666667h45.653334L305.792 725.589333H213.162667L446.848 170.666667h45.653333z"
+      fill="#000000"
+      p-id="3536"
+    ></path>
+    <path
+      d="M532.650667 170.666667h-45.653334l232.405334 554.922666h92.586666L578.346667 170.666667h-45.653334z"
+      fill="#000000"
+      p-id="3537"
+    ></path>
+    <path
+      d="M342.016 512h341.333333v85.333333h-341.333333v-85.333333z"
+      fill="#000000"
+      p-id="3538"
+    ></path>
+  </svg>
+);
