@@ -2,6 +2,7 @@ import {
   Keyboard,
   KeyboardArrowDown,
   KeyboardArrowUp,
+  Title,
 } from "@mui/icons-material";
 import {
   Button,
@@ -14,7 +15,8 @@ import {
   alpha,
   styled,
 } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { Text } from "./toolbar/Icons";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -58,13 +60,15 @@ const StyledMenu = styled((props: MenuProps) => (
     },
   },
 }));
-
-export const Dropdown = (
-  menuProps?: MenuProps
-) => {
+export const Dropdown = ({
+  component,
+  menuProps,
+}: {
+  component: ReactNode;
+  menuProps?: MenuProps;
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [endIcon, setEndIcon] = useState<ReactNode>(<KeyboardArrowDown />);
-  const open = Boolean(anchorEl);
   const handleHover = (event: React.MouseEvent<HTMLElement>) => {
     console.log("移入");
     setAnchorEl(event.currentTarget);
@@ -77,7 +81,16 @@ export const Dropdown = (
   };
   return (
     <>
-      <StyledMenu component={Popper} anchorEl={anchorEl} open={open} {...menuProps}></StyledMenu>
+      <div onMouseEnter={handleHover} onMouseLeave={handleClose}>
+        {component}
+        {endIcon}
+      </div>
+      <StyledMenu
+        component={Popper}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl) || false}
+        {...menuProps}
+      ></StyledMenu>
     </>
   );
 };

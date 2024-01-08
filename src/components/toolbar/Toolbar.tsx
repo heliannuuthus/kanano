@@ -78,7 +78,7 @@ export const Toolbar = ({
   const [formats, setFormats] = React.useState<Array<string>>([]);
 
   const handleAlignment = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newAlignment: string
   ) => {
     setAlignment(newAlignment);
@@ -130,12 +130,7 @@ export const Toolbar = ({
     },
     {
       key: "color",
-      icon: (
-        <>
-          <FormatColorFill />
-          <Dropdown open={true} />
-        </>
-      ),
+      icon: <Dropdown component={<FormatColorFill />}  />,
       tooltip: "下划线",
     },
   ];
@@ -185,7 +180,7 @@ export const Toolbar = ({
                   aria-label={component.key}
                 >
                   <PatchToolTip placement="top" title={component.tooltip} arrow>
-                    <>{component.icon}</>
+                    {component.icon}
                   </PatchToolTip>
                 </ToggleButton>
               );
@@ -209,7 +204,7 @@ export const Toolbar = ({
                   aria-label={component.key}
                 >
                   <PatchToolTip placement="top" title={component.tooltip} arrow>
-                    <>{component.icon}</>
+                    {component.icon}
                   </PatchToolTip>
                 </ToggleButton>
               );
