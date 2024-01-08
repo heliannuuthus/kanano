@@ -16,10 +16,13 @@
     "@lexical/utils": "^0.12.5",
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.2",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.11",
+    "@mui/system": "^5.15.3",
     "@tauri-apps/api": "^1.5.2",
     "lexical": "^0.12.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.6"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.8",

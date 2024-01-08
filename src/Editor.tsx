@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { styled } from "@mui/system";
-
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -9,9 +7,8 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import ToolbarPlugin from "./lexical/ToolbarPlugin";
-import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { EditorState } from "lexical";
-import { Toolbar } from "./components/Toolbar";
+import { Toolbar } from "./components/toolbar/Toolbar";
 
 const theme = {};
 
@@ -39,8 +36,9 @@ const Editor = () => {
   const onChange = (editorState: EditorState) => {
     // console.log(editorState);
   };
-  const [anchor, setAnchorEl] = useState<HTMLElement | null>(null);
-
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [clientX, setClientX] = useState<number | null>(null);
+  const [clientY, setClientY] = useState<number | null>(20);
   const showToolbar = (element: HTMLElement | null) => {
     setAnchorEl(element);
   };
@@ -49,12 +47,19 @@ const Editor = () => {
     <LexicalComposer initialConfig={initialConfig}>
       <PlainTextPlugin
         contentEditable={
-          <Toolbar anchor={<ContentEditable className="kanano" />} />
+          <>
+            <ContentEditable
+              className="kanano-editable"
+              style={{ margin: "20px"}}
+            />
+            <Toolbar anchorEl={anchorEl} top={clientX} left={clientY} />
+          </>
         }
         placeholder={<div></div>}
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ToolbarPlugin
+        setClientX={setClientX}
         setIsShowToolbar={showToolbar}
         setIsLinkEditMode={(_old: boolean) => true}
       />

@@ -16,34 +16,42 @@ import {
 import { Dispatch, useCallback, useEffect, useState } from "react";
 
 export default function ToolbarPlugin({
+  setClientX,
   setIsShowToolbar,
   setIsLinkEditMode,
 }: {
+  setClientX: Dispatch<number | null>;
   setIsShowToolbar: Dispatch<HTMLElement | null>;
   setIsLinkEditMode: Dispatch<boolean>;
 }) {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
 
-  const handleMouseup = useCallback(() => {
-    editor.update(() => {
-      const selection = $getSelection();
-      if ($isRangeSelection(selection)) {
-        if (
-          (selection as RangeSelection).anchor.offset ==
-          (selection as RangeSelection).focus.offset
-        ) {
-          setIsShowToolbar(null);
-        } else {
-          const anchorNode: ElementNode = (
-            selection as RangeSelection
-          ).anchor.getNode();
-          const elementDOM = activeEditor.getElementByKey(anchorNode.getKey());
-          setIsShowToolbar(elementDOM);
+  const handleMouseup = useCallback(
+    (event: MouseEvent) => {
+      editor.getEditorState().read(() => {
+        const selection = $getSelection();
+          console.log(event.clientX, event.clientY);
+          
+        if ($isRangeSelection(selection)) {
+          if ((selection as RangeSelection).isCollapsed() || selection.dirty) {
+            setClientX(null);
+            setIsShowToolbar(null);
+          } else {
+            const anchorNode: ElementNode = (
+              selection as RangeSelection
+            ).anchor.getNode();
+            const elementDOM = activeEditor.getElementByKey(
+              anchorNode.getKey()
+            );
+            setClientX(event.clientX);
+            setIsShowToolbar(elementDOM);
+          }
         }
-      }
-    });
-  }, [editor, activeEditor]);
+      });
+    },
+    [editor, activeEditor]
+  );
 
   useEffect(() => {
     const rootElement = editor.getRootElement();
