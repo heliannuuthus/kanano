@@ -60,6 +60,7 @@ const StyledMenu = styled((props: MenuProps) => (
     },
   },
 }));
+
 export const Dropdown = ({
   component,
   menuProps,
@@ -68,23 +69,27 @@ export const Dropdown = ({
   menuProps?: MenuProps;
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [endIcon, setEndIcon] = useState<ReactNode>(<KeyboardArrowDown />);
+  const [iconSpin, setIconSpin] = useState<boolean>(false);
   const handleHover = (event: React.MouseEvent<HTMLElement>) => {
     console.log("移入");
     setAnchorEl(event.currentTarget);
-    setEndIcon(<KeyboardArrowUp />);
+    setIconSpin(true);
   };
   const handleClose = () => {
     console.log("移出");
     setAnchorEl(null);
-    setEndIcon(<KeyboardArrowDown />);
+    setIconSpin(false);
   };
   return (
     <>
-      <div onMouseEnter={handleHover} onMouseLeave={handleClose}>
-        {component}
-        {endIcon}
-      </div>
+      <span onMouseEnter={handleHover} onMouseLeave={handleClose}>
+        <KeyboardArrowDown
+          style={{
+            transform: iconSpin ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.3s",
+          }}
+        />
+      </span>
       <StyledMenu
         component={Popper}
         anchorEl={anchorEl}

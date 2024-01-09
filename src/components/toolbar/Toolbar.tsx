@@ -130,7 +130,7 @@ export const Toolbar = ({
     },
     {
       key: "color",
-      icon: <Dropdown component={<FormatColorFill />}  />,
+      icon: <Dropdown component={<FormatColorFill />} />,
       tooltip: "下划线",
     },
   ];

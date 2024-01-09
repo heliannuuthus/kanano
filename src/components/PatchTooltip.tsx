@@ -17,7 +17,16 @@ export const PatchToolTip = ({ ...props }: TooltipProps) => {
     <Tooltip
       placement="top"
       {...props}
-      children={<span style={{ lineHeight: 1 }}>{props.children}</span>}
+      children={
+        <span
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+          }}
+        >
+          {props.children}
+        </span>
+      }
     />
   );
 };
