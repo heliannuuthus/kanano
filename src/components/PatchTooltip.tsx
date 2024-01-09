@@ -14,19 +14,10 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export const PatchToolTip = ({ ...props }: TooltipProps) => {
   return (
-    <Tooltip
+    <BootstrapTooltip
       placement="top"
       {...props}
-      children={
-        <span
-          style={{
-            width: "fit-content",
-            height: "fit-content",
-          }}
-        >
-          {props.children}
-        </span>
-      }
+      children={<span>{props.children}</span>}
     />
   );
 };

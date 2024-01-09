@@ -35,6 +35,7 @@ import {
 } from "@mui/material";
 import { PatchToolTip } from "../PatchTooltip";
 import { Dropdown } from "../Dropdown";
+import { lineHeight } from "@mui/system";
 type FontSetting = {
   icon: ReactNode;
   title: string;
@@ -48,18 +49,25 @@ type ToolbarComponent = {
 };
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  "&.MuiToggleButtonGroup-root": {
+    padding: "8px",
+  },
   "& .MuiToggleButtonGroup-grouped": {
-    margin: theme.spacing(0.5),
     boxShadow: "none",
     border: 0,
+    lineHeight: 0,
+    padding: 3,
     "&.Mui-disabled": {
       border: 0,
     },
     "&:not(:first-of-type)": {
       borderRadius: theme.shape.borderRadius,
+      marginLeft: "8px !important",
+      border: 0,
     },
     "&:first-of-type": {
       borderRadius: theme.shape.borderRadius,
+      border: 0,
     },
   },
 }));
@@ -130,8 +138,15 @@ export const Toolbar = ({
     },
     {
       key: "color",
-      icon: <Dropdown component={<FormatColorFill />} />,
-      tooltip: "下划线",
+      icon: (
+        <Dropdown
+          children={
+            <MenuItem>
+              <div>{Boolean(anchorEl)}</div>
+            </MenuItem>
+          }
+        />
+      ),
     },
   ];
 

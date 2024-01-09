@@ -31,8 +31,7 @@ export default function ToolbarPlugin({
     (event: MouseEvent) => {
       editor.getEditorState().read(() => {
         const selection = $getSelection();
-          console.log(event.clientX, event.clientY);
-          
+          console.log(event.pageX, event.pageY);
         if ($isRangeSelection(selection)) {
           if ((selection as RangeSelection).isCollapsed() || selection.dirty) {
             setClientX(null);
