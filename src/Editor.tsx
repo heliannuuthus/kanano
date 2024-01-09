@@ -50,7 +50,12 @@ const Editor = () => {
           <>
             <ContentEditable
               className="kanano-editable"
-              style={{ margin: "20px"}}
+              style={{
+                outline: "none",
+                lineHeight: 1.65,
+                letterSpacing: ".02em",
+                fontSize: "16px"
+              }}
             />
             <Toolbar anchorEl={anchorEl} top={clientX} left={clientY} />
           </>

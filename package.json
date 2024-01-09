@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@lexical/react": "^0.12.5",
     "@lexical/utils": "^0.12.5",
+    "@lexical/selection": "^0.12.5",
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.2",
     "@mui/styled-engine-sc": "^6.0.0-alpha.11",
