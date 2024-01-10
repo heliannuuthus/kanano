@@ -9,6 +9,7 @@ import {
   CLICK_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
   ElementNode,
+  $INTERNAL_isPointSelection,
   LexicalEditor,
   RangeSelection,
   SELECTION_CHANGE_COMMAND,
@@ -31,9 +32,9 @@ export default function ToolbarPlugin({
     (event: MouseEvent) => {
       editor.getEditorState().read(() => {
         const selection = $getSelection();
-          console.log(event.pageX, event.pageY);
+        console.log(selection);
         if ($isRangeSelection(selection)) {
-          if ((selection as RangeSelection).isCollapsed() || selection.dirty) {
+          if (!(selection as RangeSelection)._cachedNodes) {
             setClientX(null);
             setIsShowToolbar(null);
           } else {
@@ -51,12 +52,31 @@ export default function ToolbarPlugin({
     },
     [editor, activeEditor]
   );
+  const handleMousedown = useCallback(
+    (event: MouseEvent) => {
+      editor.getEditorState().read(() => {
+        window.getSelection()?.removeAllRanges();
+      });
+    },
+    [editor, activeEditor]
+  );
 
   useEffect(() => {
     const rootElement = editor.getRootElement();
-    editor.getRootElement()?.addEventListener("mouseup", handleMouseup);
+    const cc = editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_, newEditor) => {
+        setActiveEditor(newEditor);
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL
+    );
+    rootElement?.addEventListener("mouseup", handleMouseup);
+    rootElement?.addEventListener("mousedown", handleMousedown);
     return () => {
+      cc();
       rootElement?.removeEventListener("mouseup", handleMouseup);
+      rootElement?.removeEventListener("mousedown", handleMousedown);
     };
   }, [editor, activeEditor]);
 
