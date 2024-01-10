@@ -1,13 +1,13 @@
 {
   "build": {
-    "beforeDevCommand": "yarn dev",
-    "beforeBuildCommand": "yarn build",
-    "devPath": "http://localhost:1420",
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
+    "devPath": "http://127.0.0.1:11420",
     "distDir": "../dist"
   },
   "package": {
     "productName": "kanano",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -37,8 +37,8 @@
         "fullscreen": false,
         "resizable": true,
         "title": "kanano",
-        "width": 800,
-        "height": 600
+        "width": 1000,
+        "height": 800
       }
     ]
   }
