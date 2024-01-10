@@ -1,5 +1,4 @@
-import { Tooltip, TooltipProps, tooltipClasses, styled } from "@mui/material";
-import { lineHeight } from "@mui/system";
+import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
 
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />

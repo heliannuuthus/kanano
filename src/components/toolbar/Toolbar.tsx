@@ -1,55 +1,33 @@
-import React, {
-  Dispatch,
-  MouseEvent,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Text } from "./Icons";
-import { Instance, Options, VirtualElement } from "@popperjs/core";
+import type { VirtualElement } from "@popperjs/core";
+import React from "react";
 
 import { styled } from "@mui/material/styles";
 
 import {
-  ArrowDropDown,
   FormatAlignCenter,
   FormatAlignJustify,
   FormatAlignLeft,
   FormatAlignRight,
   FormatBold,
-  FormatColorFill,
   FormatItalic,
   FormatStrikethrough,
   FormatUnderlined,
 } from "@mui/icons-material";
 import {
   Divider,
-  Menu,
   MenuItem,
   Paper,
-  Popover,
   Popper,
-  Portal,
   ToggleButton,
   ToggleButtonGroup,
-  Tooltip,
-  TooltipProps,
 } from "@mui/material";
-import { PatchToolTip } from "../PatchTooltip";
 import { Dropdown } from "../Dropdown";
-import { lineHeight } from "@mui/system";
-type FontSetting = {
-  icon: ReactNode;
-  title: string;
-  value: string;
-};
+import { PatchToolTip } from "../PatchTooltip";
 
 type ToolbarComponent = {
   key: string;
   tooltip?: string;
-  icon: ReactElement<any, any>;
+  icon: JSX.Element;
 };
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -81,7 +59,6 @@ export const Toolbar = ({
 }: {
   anchorEl: HTMLElement | VirtualElement | null;
 }) => {
-  const [fontSetting, setFontSetting] = useState<string | null>(null);
   const [alignment, setAlignment] = React.useState("left");
   const [formats, setFormats] = React.useState<Array<string>>([]);
   const handleAlignment = (
@@ -182,7 +159,6 @@ export const Toolbar = ({
             size="small"
             value={formats}
             onChange={handleFormat}
-            aria-label="text formatting"
           >
             {formatComponents.map((component) => {
               return component.key == "divider" ? (

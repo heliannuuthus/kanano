@@ -1,34 +1,26 @@
+import { KeyboardArrowDown } from "@mui/icons-material";
 import {
-  Keyboard,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-  Title,
-} from "@mui/icons-material";
-import {
-  Button,
-  ButtonProps,
   ClickAwayListener,
   Grow,
-  Menu,
-  MenuItem,
   MenuList,
   MenuProps,
   Paper,
-  Popover,
   Popper,
-  ToggleButton,
-  alpha,
-  styled,
 } from "@mui/material";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import { Text } from "./toolbar/Icons";
+import { ReactNode, useRef, useState } from "react";
 
-export const Dropdown = ({ children }: { children: MenuProps["children"] }) => {
+export const Dropdown = ({
+  anchor,
+  children,
+}: {
+  anchor?: ReactNode | null;
+  children: MenuProps["children"];
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [iconSpin, setIconSpin] = useState<boolean>(false);
   const spanRef = useRef(null);
-  const handleHover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleHover = () => {
     setAnchorEl(spanRef.current);
     setIconSpin(true);
     setOpen(true);
@@ -39,8 +31,9 @@ export const Dropdown = ({ children }: { children: MenuProps["children"] }) => {
     setAnchorEl(null);
   };
   return (
-    <div>
+    <>
       <span ref={spanRef} onMouseEnter={handleHover} onMouseLeave={handleClose}>
+        {anchor}
         <KeyboardArrowDown
           style={{
             transform: iconSpin ? "rotate(180deg)" : "rotate(0deg)",
@@ -63,7 +56,7 @@ export const Dropdown = ({ children }: { children: MenuProps["children"] }) => {
         disablePortal
         transition
       >
-        {({ TransitionProps, placement }) => (
+        {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper
               onMouseEnter={() => {
@@ -76,16 +69,12 @@ export const Dropdown = ({ children }: { children: MenuProps["children"] }) => {
                   handleClose();
                 }}
               >
-                <MenuList>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </MenuList>
+                <MenuList>{children}</MenuList>
               </ClickAwayListener>
             </Paper>
           </Grow>
         )}
       </Popper>
-    </div>
+    </>
   );
 };

@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import ToolbarPlugin from "./lexical/ToolbarPlugin";
-import { EditorState } from "lexical";
+import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
+import { VirtualElement } from "@popperjs/core";
+import { useEffect, useState } from "react";
 import { Toolbar } from "./components/toolbar/Toolbar";
-import { Instance, Options, VirtualElement } from "@popperjs/core";
+import ToolbarPlugin from "./lexical/ToolbarPlugin";
 
 const theme = {};
 
@@ -34,17 +33,12 @@ const Editor = () => {
     theme,
     onError,
   };
-  const onChange = (editorState: EditorState) => {
+  const onChange = () => {
     // console.log(editorState);
   };
   const [anchorEl, setAnchorEl] = useState<HTMLElement | VirtualElement | null>(
     null
   );
-  const [postion, setPosition] = useState<[number, number] | null>(null);
-
-  const showToolbar = (element: HTMLElement | VirtualElement | null) => {
-    setAnchorEl(element);
-  };
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
@@ -66,11 +60,7 @@ const Editor = () => {
         placeholder={<div></div>}
         ErrorBoundary={LexicalErrorBoundary}
       />
-      <ToolbarPlugin
-        setPosition={setPosition}
-        setIsShowToolbar={showToolbar}
-        setIsLinkEditMode={(_old: boolean) => true}
-      />
+      <ToolbarPlugin setAnchorEl={setAnchorEl} />
       <HistoryPlugin />
       <AutoFocusPlugin />
       <OnChangePlugin onChange={onChange} />

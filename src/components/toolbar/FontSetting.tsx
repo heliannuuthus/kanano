@@ -1,16 +1,13 @@
+import { Menu, MenuItem } from "@mui/material";
 import { Dispatch, MouseEvent, ReactNode, useState } from "react";
 import { Text } from "./Icons";
-import { Menu, MenuItem } from "@mui/material";
+import { Dropdown } from "../Dropdown";
 
 export const FontSetting = ({
   setFontSetting: setFontSetting,
 }: {
   setFontSetting: Dispatch<string>;
 }) => {
-  // const [value, setValue] = useState<ReactNode | null>(
-  //   <a>{MergeSettings[defaultSelectedKeys[0]].icon}</a>
-  // );
-
   const [buttonElement, setButtonElement] = useState<ReactNode>(<Text />);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -26,19 +23,7 @@ export const FontSetting = ({
       <a onMouseEnter={handleEnter} onMouseLeave={handleClose}>
         {buttonElement}
       </a>
-      <Menu
-        variant="selectedMenu"
-        id="fontSetting"
-        anchorEl={anchorEl}
-        open={open}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
-      </Menu>
+      <Dropdown></Dropdown>
     </>
   );
 };
