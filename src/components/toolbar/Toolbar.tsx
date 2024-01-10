@@ -3,9 +3,13 @@ import React, {
   MouseEvent,
   ReactElement,
   ReactNode,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import { Text } from "./Icons";
+import { Instance, Options, VirtualElement } from "@popperjs/core";
+
 import { styled } from "@mui/material/styles";
 
 import {
@@ -74,17 +78,12 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 
 export const Toolbar = ({
   anchorEl,
-  top,
-  left,
 }: {
-  anchorEl: HTMLElement | null;
-  top: number | null;
-  left: number | null;
+  anchorEl: HTMLElement | VirtualElement | null;
 }) => {
   const [fontSetting, setFontSetting] = useState<string | null>(null);
   const [alignment, setAlignment] = React.useState("left");
   const [formats, setFormats] = React.useState<Array<string>>([]);
-
   const handleAlignment = (
     _event: React.MouseEvent<HTMLElement>,
     newAlignment: string
@@ -159,12 +158,12 @@ export const Toolbar = ({
   return (
     <Popper
       anchorEl={anchorEl}
-      open={top != null && left != null}
+      open={Boolean(anchorEl)}
       modifiers={[
         {
           name: "offset",
           options: {
-            offset: [top, left],
+            offset: [0, 30],
           },
         },
       ]}

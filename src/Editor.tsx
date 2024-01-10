@@ -9,6 +9,7 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import ToolbarPlugin from "./lexical/ToolbarPlugin";
 import { EditorState } from "lexical";
 import { Toolbar } from "./components/toolbar/Toolbar";
+import { Instance, Options, VirtualElement } from "@popperjs/core";
 
 const theme = {};
 
@@ -36,10 +37,12 @@ const Editor = () => {
   const onChange = (editorState: EditorState) => {
     // console.log(editorState);
   };
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [clientX, setClientX] = useState<number | null>(null);
-  const [clientY, setClientY] = useState<number | null>(20);
-  const showToolbar = (element: HTMLElement | null) => {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | VirtualElement | null>(
+    null
+  );
+  const [postion, setPosition] = useState<[number, number] | null>(null);
+
+  const showToolbar = (element: HTMLElement | VirtualElement | null) => {
     setAnchorEl(element);
   };
 
@@ -54,17 +57,17 @@ const Editor = () => {
                 outline: "none",
                 lineHeight: 1.65,
                 letterSpacing: ".02em",
-                fontSize: "16px"
+                fontSize: "16px",
               }}
             />
-            <Toolbar anchorEl={anchorEl} top={clientX} left={clientY} />
+            <Toolbar anchorEl={anchorEl} />
           </>
         }
         placeholder={<div></div>}
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ToolbarPlugin
-        setClientX={setClientX}
+        setPosition={setPosition}
         setIsShowToolbar={showToolbar}
         setIsLinkEditMode={(_old: boolean) => true}
       />

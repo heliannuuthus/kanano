@@ -1,6 +1,7 @@
 import { styled } from "@mui/system";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $findMatchingParent, mergeRegister } from "@lexical/utils";
+import { Instance, Options, VirtualElement } from "@popperjs/core";
 import {
   $getSelection,
   $isRangeSelection,
@@ -15,14 +16,17 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
 import { Dispatch, useCallback, useEffect, useState } from "react";
+const generateGetBoundingClientRect = (x = 0, y = 0) => {
+  return () => new DOMRect(x, y, 0, 0);
+};
 
 export default function ToolbarPlugin({
-  setClientX,
+  setPosition,
   setIsShowToolbar,
   setIsLinkEditMode,
 }: {
-  setClientX: Dispatch<number | null>;
-  setIsShowToolbar: Dispatch<HTMLElement | null>;
+  setPosition: Dispatch<[number, number] | null>;
+  setIsShowToolbar: Dispatch<HTMLElement | VirtualElement | null>;
   setIsLinkEditMode: Dispatch<boolean>;
 }) {
   const [editor] = useLexicalComposerContext();
@@ -32,10 +36,9 @@ export default function ToolbarPlugin({
     (event: MouseEvent) => {
       editor.getEditorState().read(() => {
         const selection = $getSelection();
-        console.log(selection);
         if ($isRangeSelection(selection)) {
           if (!(selection as RangeSelection)._cachedNodes) {
-            setClientX(null);
+            setPosition(null);
             setIsShowToolbar(null);
           } else {
             const anchorNode: ElementNode = (
@@ -44,8 +47,14 @@ export default function ToolbarPlugin({
             const elementDOM = activeEditor.getElementByKey(
               anchorNode.getKey()
             );
-            setClientX(event.clientX);
-            setIsShowToolbar(elementDOM);
+            setPosition([event.pageX, event.pageY]);
+            const virtualPopper: VirtualElement = {
+              getBoundingClientRect: generateGetBoundingClientRect(
+                event.pageX,
+                event.pageY
+              ),
+            };
+            setIsShowToolbar(virtualPopper);
           }
         }
       });
