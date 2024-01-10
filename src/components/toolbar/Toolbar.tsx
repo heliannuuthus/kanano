@@ -4,16 +4,6 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 
 import {
-  FormatAlignCenter,
-  FormatAlignJustify,
-  FormatAlignLeft,
-  FormatAlignRight,
-  FormatBold,
-  FormatItalic,
-  FormatStrikethrough,
-  FormatUnderlined,
-} from "@mui/icons-material";
-import {
   Divider,
   MenuItem,
   Paper,
@@ -23,6 +13,17 @@ import {
 } from "@mui/material";
 import { Dropdown } from "../Dropdown";
 import { PatchToolTip } from "../PatchTooltip";
+import { FontSetting } from "./FontSetting";
+import {
+  FormatAlignCenter,
+  FormatAlignJustify,
+  FormatAlignLeft,
+  FormatAlignRight,
+  FormatBold,
+  FormatItalic,
+  FormatStrikethrough,
+  FormatUnderlined,
+} from "./Icons";
 
 type ToolbarComponent = {
   key: string;
@@ -68,30 +69,8 @@ export const Toolbar = ({
     setAlignment(newAlignment);
   };
 
-  const alignmentComponents: ToolbarComponent[] = [
-    {
-      key: "left",
-      icon: <FormatAlignLeft />,
-      tooltip: "左对齐",
-    },
-    {
-      key: "center",
-      icon: <FormatAlignCenter />,
-      tooltip: "居中对齐",
-    },
-    {
-      key: "right",
-      icon: <FormatAlignRight />,
-      tooltip: "右对齐",
-    },
-    {
-      key: "justify",
-      icon: <FormatAlignJustify />,
-      tooltip: "垂直居中",
-    },
-  ];
-
   const formatComponents: ToolbarComponent[] = [
+    { key: "header", icon: <FontSetting /> },
     {
       key: "blod",
       icon: <FormatBold />,
@@ -123,6 +102,29 @@ export const Toolbar = ({
           }
         />
       ),
+    },
+  ];
+
+  const alignmentComponents: ToolbarComponent[] = [
+    {
+      key: "left",
+      icon: <FormatAlignLeft />,
+      tooltip: "左对齐",
+    },
+    {
+      key: "center",
+      icon: <FormatAlignCenter />,
+      tooltip: "居中对齐",
+    },
+    {
+      key: "right",
+      icon: <FormatAlignRight />,
+      tooltip: "右对齐",
+    },
+    {
+      key: "justify",
+      icon: <FormatAlignJustify />,
+      tooltip: "垂直居中",
     },
   ];
 

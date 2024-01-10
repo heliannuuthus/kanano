@@ -1,20 +1,13 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
-import {
-  ClickAwayListener,
-  Grow,
-  MenuList,
-  MenuProps,
-  Paper,
-  Popper,
-} from "@mui/material";
-import { ReactNode, useRef, useState } from "react";
+import { ClickAwayListener, Grow, Paper, Popper } from "@mui/material";
+import { ReactElement, useRef, useState } from "react";
 
 export const Dropdown = ({
   anchor,
   children,
 }: {
-  anchor?: ReactNode | null;
-  children: MenuProps["children"];
+  anchor?: ReactElement | null;
+  children: ReactElement;
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -69,7 +62,7 @@ export const Dropdown = ({
                   handleClose();
                 }}
               >
-                <MenuList>{children}</MenuList>
+                {children}
               </ClickAwayListener>
             </Paper>
           </Grow>
