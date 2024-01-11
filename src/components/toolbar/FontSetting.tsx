@@ -1,6 +1,6 @@
-import { MenuItem, MenuList } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { MenuItem } from "@mui/material";
 
+import { Box, styled } from "@mui/system";
 import { MouseEvent, ReactElement, useState } from "react";
 import { Dropdown } from "../Dropdown";
 import {
@@ -13,49 +13,22 @@ import {
   Text,
 } from "./Icons";
 
+const StyledMenuItem = styled(MenuItem)({
+  "&.MuiMenuItem-root": {
+    minHeight: "32px",
+    padding: "4px",
+    borderRadius: "4px",
+    width: "100%",
+    "&.MuiSvgIcon-root": {
+      fontSize: 24,
+    },
+  },
+});
 type TitleType = {
   key: string;
   icon: ReactElement;
   text: string;
 };
-
-const StyleDropdown = styled(
-  ({
-    anchor,
-    children,
-  }: {
-    anchor: ReactElement | null;
-    children: ReactElement;
-  }) => <Dropdown anchor={anchor} children={children} />
-)(({ theme }) => ({
-  "& .MuiPaper-root": {
-    borderRadius: 6,
-    marginTop: theme.spacing(1),
-    minWidth: 180,
-    color:
-      theme.palette.mode === "light"
-        ? "rgb(55, 65, 81)"
-        : theme.palette.grey[300],
-    boxShadow:
-      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-    "& .MuiMenu-list": {
-      padding: "4px 0",
-    },
-    "& .MuiMenuItem-root": {
-      "& .MuiSvgIcon-root": {
-        fontSize: 18,
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
-      },
-      "&:active": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity
-        ),
-      },
-    },
-  },
-}));
 
 const titles: Array<TitleType> = [
   {
@@ -102,21 +75,23 @@ export const FontSetting = () => {
   };
   return (
     <>
-      <StyleDropdown
-        anchor={element}
-        children={
-          <MenuList>
-            {titles.map((key: TitleType) => {
-              return (
-                <MenuItem onClick={onClick} key={key.key} disableRipple>
-                  {key.icon}
-                  {key.text}
-                </MenuItem>
-              );
-            })}
-          </MenuList>
-        }
-      />
+      <Dropdown anchor={element}>
+        {titles.map((title: TitleType) => {
+          return (
+            <StyledMenuItem
+              className="FontSettingSelection"
+              onClick={onClick}
+              disableRipple
+              key={title.key}
+            >
+              <Box sx={{ display: "flex" }}>{title.icon}</Box>
+              <Box sx={{ display: "flex", marginLeft: "16px" }}>
+                {title.text}
+              </Box>
+            </StyledMenuItem>
+          );
+        })}
+      </Dropdown>
     </>
   );
 };

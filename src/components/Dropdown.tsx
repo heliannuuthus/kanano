@@ -1,13 +1,13 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
 import { ClickAwayListener, Grow, Paper, Popper } from "@mui/material";
-import { ReactElement, useRef, useState } from "react";
+import { ReactElement, ReactNode, useRef, useState } from "react";
 
 export const Dropdown = ({
   anchor,
   children,
 }: {
   anchor?: ReactElement | null;
-  children: ReactElement;
+  children: ReactNode;
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -36,7 +36,6 @@ export const Dropdown = ({
       </span>
       <Popper
         open={open}
-        component={Popper}
         anchorEl={anchorEl}
         modifiers={[
           {
@@ -52,6 +51,7 @@ export const Dropdown = ({
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper
+              sx={{ padding: "8px", minWidth: "230px" }}
               onMouseEnter={() => {
                 setOpen(true);
               }}
@@ -62,7 +62,7 @@ export const Dropdown = ({
                   handleClose();
                 }}
               >
-                {children}
+                <div>{children}</div>
               </ClickAwayListener>
             </Paper>
           </Grow>
