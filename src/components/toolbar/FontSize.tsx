@@ -4,6 +4,7 @@ import { Box, styled } from "@mui/system";
 import { ReactElement, useState } from "react";
 import { Dropdown } from "../Dropdown";
 import {
+  Checked,
   FormatH1,
   FormatH2,
   FormatH3,
@@ -66,22 +67,40 @@ const FontSizes: Record<string, FontSizeType> = {
 };
 
 export const FontSize = () => {
-  const [element, setElement] = useState<ReactElement>(<Text />);
+  const [element, setElement] = useState<ReactElement>(FontSizes["text"].icon);
+  const [selected, setSelected] = useState<string>(FontSizes["text"].key);
   return (
     <>
       <Dropdown anchor={element}>
-        {Object.values(FontSizes).map((title: FontSizeType) => {
+        {Object.values(FontSizes).map((fontsize: FontSizeType) => {
           return (
             <StyledMenuItem
-              onClick={() => setElement(title.icon)}
+              onClick={() => {
+                setElement(fontsize.icon);
+                setSelected(fontsize.key);
+              }}
               disableRipple
-              key={title.key}
+              key={fontsize.key}
+              selected={fontsize.key == selected}
             >
-              <Box sx={{ display: "flex" }}>{title.icon}</Box>
+              <Box sx={{ display: "flex" }}>{fontsize.icon}</Box>
               <Box
-                sx={{ display: "flex", marginLeft: "16px", fontSize: "14px" }}
+                sx={{
+                  display: "flex",
+                  width: "100%",
+                  marginLeft: "16px",
+                  fontSize: "14px",
+                }}
               >
-                {title.content}
+                {fontsize.content}
+              </Box>
+              <Box
+                sx={{
+                  display: fontsize.key == selected ? "flex" : "none",
+                  lineHeight: "16px",
+                }}
+              >
+                <Checked />
               </Box>
             </StyledMenuItem>
           );
