@@ -1,34 +1,27 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
-import {
-  ClickAwayListener,
-  Grow,
-  MenuList,
-  MenuProps,
-  Paper,
-  Popper,
-} from "@mui/material";
-import { ReactNode, useRef, useState } from "react";
+import { ClickAwayListener, Grow, Paper, Popper } from "@mui/material";
+import { ReactElement, ReactNode, useRef, useState } from "react";
 
 export const Dropdown = ({
   anchor,
   children,
 }: {
-  anchor?: ReactNode | null;
-  children: MenuProps["children"];
+  anchor?: ReactElement | null;
+  children: ReactNode;
 }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [iconSpin, setIconSpin] = useState<boolean>(false);
   const spanRef = useRef(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(spanRef.current);
   const handleHover = () => {
+    setOpen(true);
     setAnchorEl(spanRef.current);
     setIconSpin(true);
-    setOpen(true);
   };
   const handleClose = () => {
-    setOpen(false);
-    setIconSpin(false);
     setAnchorEl(null);
+    setIconSpin(false);
+    setOpen(false);
   };
   return (
     <>
@@ -38,12 +31,12 @@ export const Dropdown = ({
           style={{
             transform: iconSpin ? "rotate(180deg)" : "rotate(0deg)",
             transition: iconSpin ? "transform 0.3s" : "transform 0.1s",
+            transitionDelay: iconSpin ? "0" : "350ms",
           }}
         />
       </span>
       <Popper
         open={open}
-        component={Popper}
         anchorEl={anchorEl}
         modifiers={[
           {
@@ -53,23 +46,21 @@ export const Dropdown = ({
             },
           },
         ]}
-        disablePortal
         transition
       >
         {({ TransitionProps }) => (
-          <Grow {...TransitionProps}>
+          <Grow {...TransitionProps} timeout={350}>
             <Paper
-              onMouseEnter={() => {
-                setOpen(true);
-              }}
-              onMouseLeave={() => setOpen(false)}
+              sx={{ padding: "8px", minWidth: "230px" }}
+              onMouseEnter={handleHover}
+              onMouseLeave={handleClose}
             >
               <ClickAwayListener
                 onClickAway={() => {
                   handleClose();
                 }}
               >
-                <MenuList>{children}</MenuList>
+                <div>{children}</div>
               </ClickAwayListener>
             </Paper>
           </Grow>
