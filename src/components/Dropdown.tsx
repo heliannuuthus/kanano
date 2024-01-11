@@ -9,19 +9,19 @@ export const Dropdown = ({
   anchor?: ReactElement | null;
   children: ReactNode;
 }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [iconSpin, setIconSpin] = useState<boolean>(false);
   const spanRef = useRef(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(spanRef.current);
   const handleHover = () => {
+    setOpen(true);
     setAnchorEl(spanRef.current);
     setIconSpin(true);
-    setOpen(true);
   };
   const handleClose = () => {
-    setOpen(false);
-    setIconSpin(false);
     setAnchorEl(null);
+    setIconSpin(false);
+    setOpen(false);
   };
   return (
     <>
@@ -31,6 +31,7 @@ export const Dropdown = ({
           style={{
             transform: iconSpin ? "rotate(180deg)" : "rotate(0deg)",
             transition: iconSpin ? "transform 0.3s" : "transform 0.1s",
+            transitionDelay: iconSpin ? "0" : "350ms",
           }}
         />
       </span>
@@ -45,17 +46,14 @@ export const Dropdown = ({
             },
           },
         ]}
-        disablePortal
         transition
       >
         {({ TransitionProps }) => (
-          <Grow {...TransitionProps}>
+          <Grow {...TransitionProps} timeout={350}>
             <Paper
               sx={{ padding: "8px", minWidth: "230px" }}
-              onMouseEnter={() => {
-                setOpen(true);
-              }}
-              onMouseLeave={() => setOpen(false)}
+              onMouseEnter={handleHover}
+              onMouseLeave={handleClose}
             >
               <ClickAwayListener
                 onClickAway={() => {

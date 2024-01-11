@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Dropdown } from "../Dropdown";
 import { PatchToolTip } from "../PatchTooltip";
-import { FontSetting } from "./FontSetting";
+import { FontSize } from "./FontSize";
 import {
   FormatAlignCenter,
   FormatAlignJustify,
@@ -70,7 +70,6 @@ export const Toolbar = ({
   };
 
   const formatComponents: ToolbarComponent[] = [
-    { key: "header", icon: <FontSetting /> },
     {
       key: "blod",
       icon: <FormatBold />,
@@ -157,6 +156,17 @@ export const Toolbar = ({
             flexWrap: "wrap",
           }}
         >
+          <StyledToggleButtonGroup>
+            <ToggleButton
+              value="fontsetting"
+              selected={false}
+              fullWidth
+              disableRipple
+            >
+              <FontSize />
+            </ToggleButton>
+          </StyledToggleButtonGroup>
+          <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
           <StyledToggleButtonGroup
             size="small"
             value={formats}
