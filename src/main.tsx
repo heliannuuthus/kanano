@@ -4,7 +4,7 @@ import Editor from "./Editor";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <Editor />
-  </React.StrictMode>
+	<React.StrictMode>
+		<Editor />
+	</React.StrictMode>
 );

@@ -13,59 +13,59 @@ import ToolbarPlugin from "./lexical/ToolbarPlugin";
 const theme = {};
 
 function AutoFocusPlugin() {
-  const [editor] = useLexicalComposerContext();
+	const [editor] = useLexicalComposerContext();
 
-  useEffect(() => {
-    // Focus the editor when the effect fires!
-    editor.focus();
-  }, [editor]);
+	useEffect(() => {
+		// Focus the editor when the effect fires!
+		editor.focus();
+	}, [editor]);
 
-  return null;
+	return null;
 }
 
 function onError(error: Error) {
-  console.error(error);
+	console.error(error);
 }
 
 const Editor = () => {
-  const initialConfig = {
-    namespace: "Kanano",
-    theme,
-    onError,
-  };
-  const onChange = () => {
-    // console.log(editorState);
-  };
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | VirtualElement | null>(
-    null
-  );
+	const initialConfig = {
+		namespace: "Kanano",
+		theme,
+		onError,
+	};
+	const onChange = () => {
+		// console.log(editorState);
+	};
+	const [anchorEl, setAnchorEl] = useState<HTMLElement | VirtualElement | null>(
+		null
+	);
 
-  return (
-    <LexicalComposer initialConfig={initialConfig}>
-      <PlainTextPlugin
-        contentEditable={
-          <>
-            <ContentEditable
-              className="kanano-editable"
-              style={{
-                outline: "none",
-                lineHeight: 1.65,
-                letterSpacing: ".02em",
-                fontSize: "16px",
-              }}
-            />
-            <Toolbar anchorEl={anchorEl} />
-          </>
-        }
-        placeholder={<div></div>}
-        ErrorBoundary={LexicalErrorBoundary}
-      />
-      <ToolbarPlugin setAnchorEl={setAnchorEl} />
-      <HistoryPlugin />
-      <AutoFocusPlugin />
-      <OnChangePlugin onChange={onChange} />
-    </LexicalComposer>
-  );
+	return (
+		<LexicalComposer initialConfig={initialConfig}>
+			<PlainTextPlugin
+				contentEditable={
+					<>
+						<ContentEditable
+							className="kanano-editable"
+							style={{
+								outline: "none",
+								lineHeight: 1.65,
+								letterSpacing: ".02em",
+								fontSize: "16px",
+							}}
+						/>
+					</>
+				}
+				placeholder={<div></div>}
+				ErrorBoundary={LexicalErrorBoundary}
+			/>
+			<Toolbar anchorEl={anchorEl} />
+			<ToolbarPlugin setAnchorEl={setAnchorEl} />
+			<HistoryPlugin />
+			<AutoFocusPlugin />
+			<OnChangePlugin onChange={onChange} />
+		</LexicalComposer>
+	);
 };
 
 export default Editor;
