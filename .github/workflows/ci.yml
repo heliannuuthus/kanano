@@ -1,0 +1,13 @@
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  lint:
+    uses: heliannuuthus/workflow/.github/workflows/call-node-lint.yml@master
+
+  build:
+    needs: lint
+    uses: heliannuuthus/workflow/.github/workflows/call-node-build.yml@master
+    with:
+      PNPM_STORE: ${{ needs.lint.outputs.PNPM_STORE }}
