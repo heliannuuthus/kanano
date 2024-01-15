@@ -12,7 +12,7 @@ import {
 	FormatH5,
 	FormatH6,
 	Text,
-} from "./Icons";
+} from "../Icons";
 
 const StyledMenuItem = styled(MenuItem)({
 	"&.MuiMenuItem-root": {

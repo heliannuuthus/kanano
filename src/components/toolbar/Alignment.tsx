@@ -9,7 +9,7 @@ import {
 	FormatAlignJustify,
 	FormatAlignLeft,
 	FormatAlignRight,
-} from "./Icons";
+} from "../Icons";
 
 const StyledMenuItem = styled(MenuItem)({
 	"&.MuiMenuItem-root": {

@@ -12,9 +12,6 @@ import {
 	ToggleButtonGroup,
 } from "@mui/material";
 import { Dropdown } from "../Dropdown";
-import { PatchToolTip } from "../PatchTooltip";
-import { Alignment } from "./Alignment";
-import { FontSize } from "./FontSize";
 import {
 	FormatBold,
 	FormatColorFill,
@@ -22,7 +19,10 @@ import {
 	FormatStrikethrough,
 	FormatUnderlined,
 	Linked,
-} from "./Icons";
+} from "../Icons";
+import { PatchToolTip } from "../PatchTooltip";
+import { Alignment } from "./Alignment";
+import { FontSize } from "./FontSize";
 
 type ToolbarComponent = {
 	key: string;
@@ -102,80 +102,80 @@ export const Toolbar = ({
 		},
 	];
 
-  const handleFormat = (
-    event: React.MouseEvent<HTMLElement>,
-    newFormats: string[]
-  ) => {
-    setFormats(newFormats);
-  };
-  return (
-    <Popper
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      modifiers={[
-        {
-          name: "offset",
-          options: {
-            offset: [0, 30],
-          },
-        },
-      ]}
-      placement="top"
-    >
-      <div>
-        <Paper
-          elevation={0}
-          sx={{
-            display: "flex",
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            flexWrap: "wrap",
-          }}
-        >
-          <StyledToggleButtonGroup>
-            <ToggleButton
-              value="fontsize"
-              selected={false}
-              fullWidth
-              disableRipple
-            >
-              <FontSize />
-            </ToggleButton>
-          </StyledToggleButtonGroup>
-          <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
-          <StyledToggleButtonGroup>
-            <ToggleButton
-              value="alignment"
-              selected={false}
-              fullWidth
-              disableRipple
-            >
-              <Alignment />
-            </ToggleButton>
-          </StyledToggleButtonGroup>
-          <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
-          <StyledToggleButtonGroup
-            size="small"
-            value={formats}
-            onChange={handleFormat}
-          >
-            {formatComponents.map((component) => {
-              return component.key == "divider" ? (
-                component.icon
-              ) : (
-                <ToggleButton
-                  value={component.key}
-                  key={component.key}
-                  aria-label={component.key}
-                >
-                  <PatchToolTip placement="top" title={component.tooltip} arrow>
-                    {component.icon}
-                  </PatchToolTip>
-                </ToggleButton>
-              );
-            })}
-          </StyledToggleButtonGroup>
-        </Paper>
-      </div>
-    </Popper>
-  );
+	const handleFormat = (
+		event: React.MouseEvent<HTMLElement>,
+		newFormats: string[]
+	) => {
+		setFormats(newFormats);
+	};
+	return (
+		<Popper
+			anchorEl={anchorEl}
+			open={Boolean(anchorEl)}
+			modifiers={[
+				{
+					name: "offset",
+					options: {
+						offset: [0, 30],
+					},
+				},
+			]}
+			placement="top"
+		>
+			<div>
+				<Paper
+					elevation={0}
+					sx={{
+						display: "flex",
+						border: (theme) => `1px solid ${theme.palette.divider}`,
+						flexWrap: "wrap",
+					}}
+				>
+					<StyledToggleButtonGroup>
+						<ToggleButton
+							value="fontsize"
+							selected={false}
+							fullWidth
+							disableRipple
+						>
+							<FontSize />
+						</ToggleButton>
+					</StyledToggleButtonGroup>
+					<Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
+					<StyledToggleButtonGroup>
+						<ToggleButton
+							value="alignment"
+							selected={false}
+							fullWidth
+							disableRipple
+						>
+							<Alignment />
+						</ToggleButton>
+					</StyledToggleButtonGroup>
+					<Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
+					<StyledToggleButtonGroup
+						size="small"
+						value={formats}
+						onChange={handleFormat}
+					>
+						{formatComponents.map((component) => {
+							return component.key === "divider" ? (
+								component.icon
+							) : (
+								<ToggleButton
+									value={component.key}
+									key={component.key}
+									aria-label={component.key}
+								>
+									<PatchToolTip placement="top" title={component.tooltip} arrow>
+										{component.icon}
+									</PatchToolTip>
+								</ToggleButton>
+							);
+						})}
+					</StyledToggleButtonGroup>
+				</Paper>
+			</div>
+		</Popper>
+	);
 };
