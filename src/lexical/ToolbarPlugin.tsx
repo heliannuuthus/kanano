@@ -3,6 +3,7 @@ import { VirtualElement } from "@popperjs/core";
 import {
 	$getSelection,
 	$isRangeSelection,
+	$setSelection,
 	COMMAND_PRIORITY_CRITICAL,
 	RangeSelection,
 	SELECTION_CHANGE_COMMAND,
@@ -24,7 +25,11 @@ export default function ToolbarPlugin({
 		(event: MouseEvent) => {
 			editor.getEditorState().read(() => {
 				const selection = $getSelection();
-				if ($isRangeSelection(selection)) {
+				if (selection == null) {
+					setAnchorEl(null);
+					return;
+				} else if ($isRangeSelection(selection)) {
+					// console.log(selection.anchor.getNode());
 					if (!(selection as RangeSelection)._cachedNodes) {
 						setAnchorEl(null);
 					} else {
@@ -42,13 +47,13 @@ export default function ToolbarPlugin({
 		[editor, activeEditor]
 	);
 	const handleMousedown = useCallback(() => {
-		editor.getEditorState().read(() => {
-			window.getSelection()?.removeAllRanges();
+		editor.update(() => {
+			$setSelection(null);
 		});
 	}, [editor, activeEditor]);
 
 	useEffect(() => {
-		const rootElement = editor.getRootElement();
+		const kananoEditor = document.getElementById("editor");
 		const cc = editor.registerCommand(
 			SELECTION_CHANGE_COMMAND,
 			(_, newEditor) => {
@@ -57,12 +62,12 @@ export default function ToolbarPlugin({
 			},
 			COMMAND_PRIORITY_CRITICAL
 		);
-		rootElement?.addEventListener("mouseup", handleMouseup);
-		rootElement?.addEventListener("mousedown", handleMousedown);
+		kananoEditor?.addEventListener("mouseup", handleMouseup);
+		kananoEditor?.addEventListener("mousedown", handleMousedown);
 		return () => {
 			cc();
-			rootElement?.removeEventListener("mouseup", handleMouseup);
-			rootElement?.removeEventListener("mousedown", handleMousedown);
+			kananoEditor?.removeEventListener("mouseup", handleMouseup);
+			kananoEditor?.removeEventListener("mousedown", handleMousedown);
 		};
 	}, [editor, activeEditor]);
 
