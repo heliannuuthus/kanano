@@ -1,11 +1,8 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { VirtualElement } from "@popperjs/core";
 import {
-	$getSelection,
-	$isRangeSelection,
 	$setSelection,
 	COMMAND_PRIORITY_CRITICAL,
-	RangeSelection,
 	SELECTION_CHANGE_COMMAND,
 } from "lexical";
 import { Dispatch, useCallback, useEffect, useState } from "react";
@@ -22,25 +19,24 @@ export default function ToolbarPlugin({
 	const [activeEditor, setActiveEditor] = useState(editor);
 
 	const handleMouseup = useCallback(
-		(event: MouseEvent) => {
+		(_event: MouseEvent) => {
 			editor.getEditorState().read(() => {
-				const selection = $getSelection();
-				if (selection == null) {
+				const selection = window.getSelection();
+				console.log(selection);
+				if (selection && !selection?.isCollapsed) {
+					const range = selection?.getRangeAt(0);
+					const rect = range.getBoundingClientRect();
+					const clientX = rect.right + window.scrollX;
+					const clientY = rect.bottom + window.scrollY;
+					const virtualPopper: VirtualElement = {
+						getBoundingClientRect: generateGetBoundingClientRect(
+							clientX,
+							clientY
+						),
+					};
+					setAnchorEl(virtualPopper);
+				} else {
 					setAnchorEl(null);
-					return;
-				} else if ($isRangeSelection(selection)) {
-					// console.log(selection.anchor.getNode());
-					if (!(selection as RangeSelection)._cachedNodes) {
-						setAnchorEl(null);
-					} else {
-						const virtualPopper: VirtualElement = {
-							getBoundingClientRect: generateGetBoundingClientRect(
-								event.pageX,
-								event.pageY
-							),
-						};
-						setAnchorEl(virtualPopper);
-					}
 				}
 			});
 		},
@@ -49,6 +45,8 @@ export default function ToolbarPlugin({
 	const handleMousedown = useCallback(() => {
 		editor.update(() => {
 			$setSelection(null);
+			const selection = window.getSelection();
+			selection?.removeAllRanges();
 		});
 	}, [editor, activeEditor]);
 

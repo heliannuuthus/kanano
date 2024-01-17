@@ -103,7 +103,7 @@ export const Toolbar = ({
 	];
 
 	const handleFormat = (
-		event: React.MouseEvent<HTMLElement>,
+		_event: React.MouseEvent<HTMLElement>,
 		newFormats: string[]
 	) => {
 		setFormats(newFormats);
