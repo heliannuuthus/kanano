@@ -5,16 +5,13 @@ import { styled } from "@mui/material/styles";
 
 import {
 	Divider,
-	MenuItem,
 	Paper,
 	Popper,
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
-import { Dropdown } from "../Dropdown";
 import {
 	FormatBold,
-	FormatColorFill,
 	FormatItalic,
 	FormatStrikethrough,
 	FormatUnderlined,
@@ -22,6 +19,7 @@ import {
 } from "../Icons";
 import { PatchToolTip } from "../PatchTooltip";
 import { Alignment } from "./Alignment";
+import { ColorFill } from "./ColorFill";
 import { FontSize } from "./FontSize";
 
 type ToolbarComponent = {
@@ -86,19 +84,6 @@ export const Toolbar = ({
 			key: "linked",
 			icon: <Linked />,
 			tooltip: "链接",
-		},
-		{
-			key: "colorfill",
-			icon: (
-				<Dropdown
-					anchor={<FormatColorFill />}
-					children={
-						<MenuItem>
-							<div>{Boolean(anchorEl)}</div>
-						</MenuItem>
-					}
-				/>
-			),
 		},
 	];
 
@@ -173,6 +158,9 @@ export const Toolbar = ({
 								</ToggleButton>
 							);
 						})}
+						<ToggleButton value="colorfill" selected={false} disableRipple>
+							<ColorFill />
+						</ToggleButton>
 					</StyledToggleButtonGroup>
 				</Paper>
 			</div>

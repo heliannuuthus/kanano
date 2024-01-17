@@ -1,5 +1,5 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { ClickAwayListener, Grow, Paper, Popper } from "@mui/material";
+import { ClickAwayListener, Fade, Paper, Popper } from "@mui/material";
 import { ReactElement, ReactNode, useRef, useState } from "react";
 
 export const Dropdown = ({
@@ -31,7 +31,6 @@ export const Dropdown = ({
 					style={{
 						transform: iconSpin ? "rotate(180deg)" : "rotate(0deg)",
 						transition: iconSpin ? "transform 0.3s" : "transform 0.1s",
-						transitionDelay: iconSpin ? "0" : "350ms",
 					}}
 				/>
 			</span>
@@ -49,7 +48,15 @@ export const Dropdown = ({
 				transition
 			>
 				{({ TransitionProps }) => (
-					<Grow {...TransitionProps} timeout={350}>
+					<Fade
+						{...TransitionProps}
+						timeout={{
+							appear: 350,
+							enter: 350,
+							exit: 350,
+						}}
+						style={{ transitionDelay: "0.3s" }}
+					>
 						<Paper
 							sx={{ padding: "8px", minWidth: "230px" }}
 							onMouseEnter={handleHover}
@@ -63,7 +70,7 @@ export const Dropdown = ({
 								<div>{children}</div>
 							</ClickAwayListener>
 						</Paper>
-					</Grow>
+					</Fade>
 				)}
 			</Popper>
 		</>
