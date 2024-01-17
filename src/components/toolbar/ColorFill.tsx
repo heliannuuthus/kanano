@@ -1,5 +1,4 @@
-import { IconButton, MenuItem, SvgIcon } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Paper, SvgIcon } from "@mui/material";
 import { CSSProperties, SVGProps } from "react";
 import { Dropdown } from "../Dropdown";
 
@@ -32,19 +31,8 @@ const ColorFillIcon = ({
 export const ColorFill = () => {
 	return (
 		<Box sx={{ display: "flex", justifyContent: "center" }}>
-			<IconButton sx={{ borderRadius: "8px", height: "24px", width: "24px" }}>
-				<ColorFillIcon backgroundColor={"red"} color={"white"} />
-			</IconButton>
-			<Dropdown
-				children={
-					<MenuItem>
-						<div>{Boolean(true)}</div>
-						<div>{Boolean(true)}</div>
-						<div>{Boolean(true)}</div>
-						<div>{Boolean(true)}</div>
-					</MenuItem>
-				}
-			/>
+			<ColorFillIcon backgroundColor={"red"} color={"white"} />
+			<Dropdown children={<Paper></Paper>} />
 		</Box>
 	);
 };
