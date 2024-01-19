@@ -1,13 +1,16 @@
-import { Box, Paper, SvgIcon } from "@mui/material";
+import { Box, SvgIcon, ToggleButton, Typography } from "@mui/material";
 import { CSSProperties, SVGProps } from "react";
 import { Dropdown } from "../Dropdown";
+import { ColorFillToggleButtonGroup } from "./ToggleButtonGroup";
 
 const ColorFillIcon = ({
 	color,
+	size,
 	backgroundColor,
 }: {
-	color: SVGProps<SVGSVGElement>["fill"];
-	backgroundColor: CSSProperties["backgroundColor"];
+	color?: SVGProps<SVGSVGElement>["fill"];
+	size?: CSSProperties["fontSize"];
+	backgroundColor?: CSSProperties["backgroundColor"];
 }) => {
 	return (
 		<SvgIcon>
@@ -16,6 +19,7 @@ const ColorFillIcon = ({
 				style={{
 					backgroundColor,
 					borderRadius: "5px",
+					fontSize: size,
 				}}
 				xmlns="http://www.w3.org/2000/svg"
 				height="24"
@@ -28,11 +32,38 @@ const ColorFillIcon = ({
 	);
 };
 
+const pallet: Array<string> = [
+	"#FFCCCC",
+	"#CCFFCC",
+	"#CCCCFF",
+	"#FFFFCC",
+	"#FFEBEB",
+	"#CCFFFF",
+];
+
 export const ColorFill = () => {
 	return (
-		<Box sx={{ display: "flex", justifyContent: "center" }}>
-			<ColorFillIcon backgroundColor={"red"} color={"white"} />
-			<Dropdown children={<Paper></Paper>} />
-		</Box>
+		<ColorFillToggleButtonGroup>
+			<ToggleButton value="colorFill">
+				<ColorFillIcon backgroundColor={"red"} color={"white"} />
+			</ToggleButton>
+			<ToggleButton value="colorFillDropDown">
+				<Dropdown
+					children={
+						<Box>
+							<Typography variant="body2">字体颜色</Typography>
+							<ColorFillToggleButtonGroup>
+								{pallet.map((color) => (
+									<ColorFillIcon color={color} />
+								))}
+							</ColorFillToggleButtonGroup>
+							<div>123</div>
+							<div>123</div>
+							<div>123</div>
+						</Box>
+					}
+				/>
+			</ToggleButton>
+		</ColorFillToggleButtonGroup>
 	);
 };

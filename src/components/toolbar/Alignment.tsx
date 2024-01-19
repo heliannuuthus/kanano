@@ -1,4 +1,4 @@
-import { MenuItem } from "@mui/material";
+import { MenuItem, ToggleButton } from "@mui/material";
 
 import { Box, styled } from "@mui/system";
 import { ReactElement, useState } from "react";
@@ -10,6 +10,7 @@ import {
 	FormatAlignLeft,
 	FormatAlignRight,
 } from "../Icons";
+import { ToolBarCombineButtonGroup } from "./ToggleButtonGroup";
 
 const StyledMenuItem = styled(MenuItem)({
 	"&.MuiMenuItem-root": {
@@ -56,41 +57,50 @@ export const Alignment = () => {
 	const [selected, setSelected] = useState<string>(Alignments["alignLeft"].key);
 	return (
 		<>
-			<Dropdown anchor={element}>
-				{Object.values(Alignments).map((alignment: AlignmentType) => {
-					return (
-						<StyledMenuItem
-							onClick={() => {
-								setElement(alignment.icon);
-								setSelected(alignment.key);
-							}}
-							disableRipple
-							key={alignment.key}
-							selected={alignment.key === selected}
-						>
-							<Box sx={{ display: "flex" }}>{alignment.icon}</Box>
-							<Box
-								sx={{
-									display: "flex",
-									width: "100%",
-									marginLeft: "16px",
-									fontSize: "14px",
-								}}
-							>
-								{alignment.content}
-							</Box>
-							<Box
-								sx={{
-									display: alignment.key === selected ? "flex" : "none",
-									lineHeight: "16px",
-								}}
-							>
-								<Checked />
-							</Box>
-						</StyledMenuItem>
-					);
-				})}
-			</Dropdown>
+			<ToolBarCombineButtonGroup>
+				<ToggleButton
+					value="alignment"
+					selected={false}
+					disableRipple
+					fullWidth
+				>
+					<Dropdown anchor={element}>
+						{Object.values(Alignments).map((alignment: AlignmentType) => {
+							return (
+								<StyledMenuItem
+									onClick={() => {
+										setElement(alignment.icon);
+										setSelected(alignment.key);
+									}}
+									disableRipple
+									key={alignment.key}
+									selected={alignment.key === selected}
+								>
+									<Box sx={{ display: "flex" }}>{alignment.icon}</Box>
+									<Box
+										sx={{
+											display: "flex",
+											width: "100%",
+											marginLeft: "16px",
+											fontSize: "14px",
+										}}
+									>
+										{alignment.content}
+									</Box>
+									<Box
+										sx={{
+											display: alignment.key === selected ? "flex" : "none",
+											lineHeight: "16px",
+										}}
+									>
+										<Checked />
+									</Box>
+								</StyledMenuItem>
+							);
+						})}
+					</Dropdown>
+				</ToggleButton>
+			</ToolBarCombineButtonGroup>
 		</>
 	);
 };

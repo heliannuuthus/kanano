@@ -1,4 +1,4 @@
-import { MenuItem } from "@mui/material";
+import { MenuItem, ToggleButton } from "@mui/material";
 
 import { Box, styled } from "@mui/system";
 import { ReactElement, useState } from "react";
@@ -13,6 +13,7 @@ import {
 	FormatH6,
 	Text,
 } from "../Icons";
+import { ToolBarCombineButtonGroup } from "./ToggleButtonGroup";
 
 const StyledMenuItem = styled(MenuItem)({
 	"&.MuiMenuItem-root": {
@@ -71,41 +72,45 @@ export const FontSize = () => {
 	const [selected, setSelected] = useState<string>(FontSizes["text"].key);
 	return (
 		<>
-			<Dropdown anchor={element}>
-				{Object.values(FontSizes).map((fontsize: FontSizeType) => {
-					return (
-						<StyledMenuItem
-							onClick={() => {
-								setElement(fontsize.icon);
-								setSelected(fontsize.key);
-							}}
-							disableRipple
-							key={fontsize.key}
-							selected={fontsize.key === selected}
-						>
-							<Box sx={{ display: "flex" }}>{fontsize.icon}</Box>
-							<Box
-								sx={{
-									display: "flex",
-									width: "100%",
-									marginLeft: "16px",
-									fontSize: "14px",
-								}}
-							>
-								{fontsize.content}
-							</Box>
-							<Box
-								sx={{
-									display: fontsize.key === selected ? "flex" : "none",
-									lineHeight: "16px",
-								}}
-							>
-								<Checked />
-							</Box>
-						</StyledMenuItem>
-					);
-				})}
-			</Dropdown>
+			<ToolBarCombineButtonGroup>
+				<ToggleButton value="fontsize" selected={false} disableRipple>
+					<Dropdown anchor={element}>
+						{Object.values(FontSizes).map((fontsize: FontSizeType) => {
+							return (
+								<StyledMenuItem
+									onClick={() => {
+										setElement(fontsize.icon);
+										setSelected(fontsize.key);
+									}}
+									disableRipple
+									key={fontsize.key}
+									selected={fontsize.key === selected}
+								>
+									<Box sx={{ display: "flex" }}>{fontsize.icon}</Box>
+									<Box
+										sx={{
+											display: "flex",
+											width: "100%",
+											marginLeft: "16px",
+											fontSize: "14px",
+										}}
+									>
+										{fontsize.content}
+									</Box>
+									<Box
+										sx={{
+											display: fontsize.key === selected ? "flex" : "none",
+											lineHeight: "16px",
+										}}
+									>
+										<Checked />
+									</Box>
+								</StyledMenuItem>
+							);
+						})}
+					</Dropdown>
+				</ToggleButton>
+			</ToolBarCombineButtonGroup>
 		</>
 	);
 };

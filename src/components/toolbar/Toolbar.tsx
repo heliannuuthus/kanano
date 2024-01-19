@@ -1,15 +1,7 @@
 import type { VirtualElement } from "@popperjs/core";
 import React from "react";
 
-import { styled } from "@mui/material/styles";
-
-import {
-	Divider,
-	Paper,
-	Popper,
-	ToggleButton,
-	ToggleButtonGroup,
-} from "@mui/material";
+import { Divider, Paper, Popper, ToggleButton } from "@mui/material";
 import {
 	FormatBold,
 	FormatItalic,
@@ -21,36 +13,13 @@ import { PatchToolTip } from "../PatchTooltip";
 import { Alignment } from "./Alignment";
 import { ColorFill } from "./ColorFill";
 import { FontSize } from "./FontSize";
+import { ToolBarButtonGroup } from "./ToggleButtonGroup";
 
 type ToolbarComponent = {
 	key: string;
 	tooltip?: string;
 	icon: React.JSX.Element;
 };
-
-const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
-	"&.MuiToggleButtonGroup-root": {
-		padding: "8px",
-	},
-	"& .MuiToggleButtonGroup-grouped": {
-		boxShadow: "none",
-		border: 0,
-		lineHeight: 0,
-		padding: 3,
-		"&.Mui-disabled": {
-			border: 0,
-		},
-		"&:not(:first-of-type)": {
-			borderRadius: theme.shape.borderRadius,
-			marginLeft: "8px !important",
-			border: 0,
-		},
-		"&:first-of-type": {
-			borderRadius: theme.shape.borderRadius,
-			border: 0,
-		},
-	},
-}));
 
 export const Toolbar = ({
 	anchorEl,
@@ -111,38 +80,17 @@ export const Toolbar = ({
 				<Paper
 					elevation={0}
 					sx={{
+						padding: "8px",
 						display: "flex",
 						border: (theme) => `1px solid ${theme.palette.divider}`,
 						flexWrap: "wrap",
 					}}
 				>
-					<StyledToggleButtonGroup>
-						<ToggleButton
-							value="fontsize"
-							selected={false}
-							fullWidth
-							disableRipple
-						>
-							<FontSize />
-						</ToggleButton>
-					</StyledToggleButtonGroup>
+					<FontSize />
 					<Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
-					<StyledToggleButtonGroup>
-						<ToggleButton
-							value="alignment"
-							selected={false}
-							fullWidth
-							disableRipple
-						>
-							<Alignment />
-						</ToggleButton>
-					</StyledToggleButtonGroup>
+					<Alignment />
 					<Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
-					<StyledToggleButtonGroup
-						size="small"
-						value={formats}
-						onChange={handleFormat}
-					>
+					<ToolBarButtonGroup value={formats} onChange={handleFormat}>
 						{formatComponents.map((component) => {
 							return component.key === "divider" ? (
 								component.icon
@@ -158,10 +106,10 @@ export const Toolbar = ({
 								</ToggleButton>
 							);
 						})}
-						<ToggleButton value="colorfill" selected={false} disableRipple>
+						<ToggleButton selected={false} value="colorFilled">
 							<ColorFill />
 						</ToggleButton>
-					</StyledToggleButtonGroup>
+					</ToolBarButtonGroup>
 				</Paper>
 			</div>
 		</Popper>

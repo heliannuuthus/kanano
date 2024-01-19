@@ -1,5 +1,6 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
 import { ClickAwayListener, Fade, Paper, Popper } from "@mui/material";
+import { Box } from "@mui/system";
 import { ReactElement, ReactNode, useRef, useState } from "react";
 
 export const Dropdown = ({
@@ -67,7 +68,7 @@ export const Dropdown = ({
 									handleClose();
 								}}
 							>
-								<div>{children}</div>
+								<Box>{children}</Box>
 							</ClickAwayListener>
 						</Paper>
 					</Fade>
