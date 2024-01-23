@@ -1,39 +1,45 @@
 import { Box, SvgIcon, ToggleButton, Typography } from "@mui/material";
-import { CSSProperties, SVGProps } from "react";
 import { Dropdown } from "../Dropdown";
 import { ColorFillToggleButtonGroup } from "./ToggleButtonGroup";
 
 const ColorFillIcon = ({
-	color,
-	size,
 	backgroundColor,
+	color,
 }: {
-	color?: SVGProps<SVGSVGElement>["fill"];
-	size?: CSSProperties["fontSize"];
-	backgroundColor?: CSSProperties["backgroundColor"];
+	backgroundColor?: string;
+	color?: string;
 }) => {
 	return (
-		<SvgIcon>
-			<svg
-				fill={color}
-				style={{
-					backgroundColor,
-					borderRadius: "5px",
-					fontSize: size,
-				}}
-				xmlns="http://www.w3.org/2000/svg"
-				height="24"
-				viewBox="0 -960 960 960"
-				width="24"
-			>
-				<path d="M300-280v-400h40v180h280v-180h40v400h-40v-180H340v180h-40Z" />
-			</svg>
-		</SvgIcon>
+		<span
+			style={{
+				height: "20px",
+				width: "20px",
+				margin: "2px",
+				borderRadius: "3px",
+				backgroundColor,
+			}}
+		>
+			<SvgIcon sx={{ fontSize: "14px", fill: `${color}` }}>
+				<svg
+					width="1em"
+					height="1em"
+					viewBox="0 0 24 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					data-icon="FontcolorOutlined"
+				>
+					<path
+						d="m16.439 15 3.14 7.391a1 1 0 1 0 1.842-.782L13.38 2.692c-.518-1.218-2.244-1.218-2.761 0L2.58 21.609a1 1 0 1 0 1.84.782L7.563 15h8.877Zm-.85-2H8.412L12 4.557 15.59 13Z"
+						fill="currentColor"
+					></path>
+				</svg>
+			</SvgIcon>
+		</span>
 	);
 };
 
 const pallet: Array<string> = [
-	"#FFCCCC",
+	"rgb(222, 120, 2)",
 	"#CCFFCC",
 	"#CCCCFF",
 	"#FFFFCC",

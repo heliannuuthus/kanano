@@ -1,27 +1,31 @@
-import { SvgIcon } from "@mui/material";
-import { ReactNode } from "react";
-export const Text = () => <Icon component={text} />;
-export const FormatH1 = () => <Icon component={h1} />;
-export const FormatH2 = () => <Icon component={h2} />;
-export const FormatH3 = () => <Icon component={h3} />;
-export const FormatH4 = () => <Icon component={h4} />;
-export const FormatH5 = () => <Icon component={h5} />;
-export const FormatH6 = () => <Icon component={h6} />;
-export const FormatQuote = () => <Icon component={quote} />;
-export const FormatBold = () => <Icon component={bold} />;
-export const FormatItalic = () => <Icon component={italic} />;
-export const FormatStrikethrough = () => <Icon component={strikethrough} />;
-export const FormatUnderlined = () => <Icon component={underlined} />;
-export const FormatAlignCenter = () => <Icon component={textAlignCenter} />;
-export const FormatAlignLeft = () => <Icon component={textAlignLeft} />;
-export const FormatAlignRight = () => <Icon component={textAlignRight} />;
-export const FormatAlignJustify = () => <Icon component={textAlignJustify} />;
-export const Linked = () => <Icon component={linked} />;
-export const Checked = () => <Icon component={checked} />;
+import { SvgIcon, SvgIconProps, svgIconClasses } from "@mui/material";
+import { styled } from "@mui/system";
+export const Text = () => <Icon children={text} />;
+export const FormatH1 = () => <Icon children={h1} />;
+export const FormatH2 = () => <Icon children={h2} />;
+export const FormatH3 = () => <Icon children={h3} />;
+export const FormatH4 = () => <Icon children={h4} />;
+export const FormatH5 = () => <Icon children={h5} />;
+export const FormatH6 = () => <Icon children={h6} />;
+export const FormatQuote = () => <Icon children={quote} />;
+export const FormatBold = () => <Icon children={bold} />;
+export const FormatItalic = () => <Icon children={italic} />;
+export const FormatStrikethrough = () => <Icon children={strikethrough} />;
+export const FormatUnderlined = () => <Icon children={underlined} />;
+export const FormatAlignCenter = () => <Icon children={textAlignCenter} />;
+export const FormatAlignLeft = () => <Icon children={textAlignLeft} />;
+export const FormatAlignRight = () => <Icon children={textAlignRight} />;
+export const FormatAlignJustify = () => <Icon children={textAlignJustify} />;
+export const Linked = () => <Icon children={linked} />;
+export const Checked = () => <Icon children={checked} />;
 
-export const Icon = ({ component }: { component: ReactNode }) => {
-	return <SvgIcon>{component}</SvgIcon>;
-};
+export const Icon = styled(({ ...props }: SvgIconProps) => {
+	return <SvgIcon {...props} />;
+})({
+	[`&.${svgIconClasses.root}`]: {
+		fontSize: "18px",
+	},
+});
 
 const text = (
 	<svg
@@ -101,45 +105,65 @@ const h6 = (
 
 const bold = (
 	<svg
+		width="1em"
+		height="1em"
+		viewBox="0 0 24 24"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		height="1rem"
-		viewBox="0 -960 960 960"
-		width="1rem"
+		data-icon="BoldOutlined"
 	>
-		<path d="M315.077-230v-500H483q57.308 0 101.154 36.154T628-599.769q0 38.692-20.307 67.731-20.308 29.038-50.308 42.576 36.538 10.231 62.038 42.924 25.5 32.692 25.5 78.846 0 64.385-48.077 101.038Q548.769-230 491-230H315.077Zm51-47.385h122.462q46.461 0 75.038-27.961 28.577-27.962 28.577-65.116 0-37.153-28.577-65.115-28.577-27.961-75.731-27.961H366.077v186.153Zm0-232.615h114.538q39.923 0 67.616-24.692 27.692-24.693 27.692-61.846 0-37.847-28.154-62.077-28.154-24.231-66.692-24.231h-115V-510Z" />
+		<path
+			d="M5 2.709C5 2.317 5.317 2 5.709 2h6.734a5.317 5.317 0 0 1 3.686 9.148 5.671 5.671 0 0 1-2.623 10.7H5.71a.709.709 0 0 1-.71-.707V2.71Zm2 7.798h5.443a3.19 3.19 0 0 0 3.19-3.19c0-1.762-1.428-3.317-3.19-3.317H7v6.507Zm0 2.126v7.09h6.507a3.544 3.544 0 0 0 0-7.09H7Z"
+			fill="currentColor"
+		></path>
 	</svg>
 );
 
 const italic = (
 	<svg
+		width="1em"
+		height="1em"
+		viewBox="0 0 24 24"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		height="1rem"
-		viewBox="0 -960 960 960"
-		width="1rem"
+		data-icon="ItalicOutlined"
 	>
-		<path d="M231.538-230v-44.616h145.385l139.231-410.768H370.769V-730h332.308v44.616H562.308L423.077-274.616h140.769V-230H231.538Z" />
+		<path
+			d="M14.825 5.077 11.19 18.923h4.052a1.038 1.038 0 1 1 0 2.077H4.954a1.038 1.038 0 1 1 0-2.077h4.053l3.636-13.846H8.591A1.038 1.038 0 1 1 8.59 3h10.287a1.038 1.038 0 0 1 0 2.077h-4.053Z"
+			fill="currentColor"
+		></path>
 	</svg>
 );
 
 const strikethrough = (
 	<svg
+		width="1em"
+		height="1em"
+		viewBox="0 0 24 24"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		height="1rem"
-		viewBox="0 -960 960 960"
-		width="1rem"
+		data-icon="HorizontalLineOutlined"
 	>
-		<path d="M486-184.615q-65.231 0-115-35-49.769-35-74.231-96.077l40.308-17.231q19.385 45.692 56.577 75.154 37.192 29.461 92.808 29.461 51.23 0 95.999-26.923 44.77-26.923 44.77-84.769 0-27.231-7.385-45.308-7.385-18.077-21.692-34.692h52q9.615 12.462 15.192 32.731Q670.923-367 670.923-340q0 74.462-55.346 114.923Q560.231-184.615 486-184.615ZM100-500v-40h760v40H100Zm382-278.308q53.692 0 92.039 22.885 38.346 22.884 65.346 70.654l-39.539 18.231Q584.692-694 555.577-714.307q-29.115-20.308-73.115-20.308-61.77 0-96.462 34.269T356.769-620h-43.692q-6.462-61.308 40.654-109.808 47.115-48.5 128.269-48.5Z" />
+		<path
+			d="M5.49 7.226A5.107 5.107 0 0 1 6.9 3.831C8.017 2.636 9.718 2 11.819 2c2.142 0 3.779.57 4.867 1.689.4.392.869.958 1.26 1.595.443.723-.191 1.53-1.04 1.53-.606 0-1.039-.447-1.326-.981a2.864 2.864 0 0 0-.362-.517c-.735-.93-1.909-1.419-3.386-1.419-2.404 0-4.154 1.395-4.2 3.393-.02.846.337 1.58.995 2.043h-2.75c-.271-.621-.403-1.332-.385-2.107Zm8.906 6.024H4.038c-.518 0-.938-.38-.938-.897 0-.518.42-.978.938-.978h16.125c.518 0 .937.437.937.954 0 .518-.42.921-.937.921h-2.455c.542.806.96 1.954.934 3.055C18.563 19.82 15.87 22 11.572 22c-2.875 0-5.028-.964-6.13-2.745a6.884 6.884 0 0 1-.545-1.191c-.261-.72.318-1.432 1.084-1.432.574 0 1.034.416 1.24.952.17.445.4.794.733 1.142.805.858 2.104 1.305 3.766 1.305 2.845 0 4.696-1.39 4.747-3.61.024-1.072-.256-1.61-.897-2.42-.473-.598-1.174-.751-1.174-.751Z"
+			fill="currentColor"
+		></path>
 	</svg>
 );
 
 const underlined = (
 	<svg
+		width="1em"
+		height="1em"
+		viewBox="0 0 24 24"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		height="1rem"
-		viewBox="0 -960 960 960"
-		width="1rem"
+		data-icon="UnderlineOutlined"
 	>
-		<path d="M227.692-190v-40h504.616v40H227.692ZM480-317.692q-85.615 0-134.308-50.308Q297-418.308 297-504.615v-302.308h45.308v303.692q0 65.231 36.461 103.308Q415.231-361.846 480-361.846q64.769 0 101.231-38.077Q617.692-438 617.692-503.231v-303.692H663v302.308q0 86.307-48.692 136.615Q565.615-317.692 480-317.692Z" />
+		<path
+			d="M7.361 3.052a.99.99 0 0 0-.989-.994.998.998 0 0 0-.999.994v5.765c0 4.205 2.601 7.29 6.627 7.29s6.627-3.085 6.627-7.29V3.052a.996.996 0 0 0-.996-.994.992.992 0 0 0-.992.994v5.765c0 3.003-1.763 5.302-4.639 5.302-2.876 0-4.639-2.299-4.639-5.302V3.052ZM3.054 19.42a.988.988 0 0 0-.994.988 1 1 0 0 0 .994 1h17.892a1 1 0 0 0 .994-1.002.987.987 0 0 0-.994-.986H3.054Z"
+			fill="currentColor"
+		></path>
 	</svg>
 );
 
@@ -197,12 +221,21 @@ const textAlignJustify = (
 
 const linked = (
 	<svg
+		width="1em"
+		height="1em"
+		viewBox="0 0 24 24"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		height="1rem"
-		viewBox="0 -960 960 960"
-		width="1rem"
+		data-icon="GlobalLinkOutlined"
 	>
-		<path d="M424.615-316.923H283.077q-67.677 0-115.377-47.687Q120-412.298 120-479.957q0-67.658 47.7-115.389 47.7-47.731 115.377-47.731h141.538v40H283.077q-50.769 0-86.923 36.154T160-480q0 50.769 36.154 86.923t86.923 36.154h141.538v40ZM340-460v-40h280v40H340Zm195.385 143.077v-40h141.538q50.769 0 86.923-36.154T800-480q0-50.769-36.154-86.923t-86.923-36.154H535.385v-40h141.538q67.677 0 115.377 47.687Q840-547.702 840-480.043q0 67.658-47.7 115.389-47.7 47.731-115.377 47.731H535.385Z" />
+		<path
+			d="M18.849 2.699a5.037 5.037 0 0 0-7.1.97L8.97 7.372a4.784 4.784 0 0 0 .957 6.699l.972.729a1 1 0 0 0 1.2-1.6l-.972-.73a2.784 2.784 0 0 1-.557-3.898l2.777-3.703a3.037 3.037 0 1 1 4.8 3.72l-1.429 1.786a1 1 0 1 0 1.562 1.25l1.43-1.788a5.037 5.037 0 0 0-.862-7.138Z"
+			fill="currentColor"
+		></path>
+		<path
+			d="M5.152 21.301a5.037 5.037 0 0 0 7.1-.97l2.777-3.703a4.784 4.784 0 0 0-.957-6.699L13.1 9.2a1 1 0 0 0-1.2 1.6l.973.73a2.784 2.784 0 0 1 .556 3.898l-2.777 3.703a3.037 3.037 0 1 1-4.8-3.72l1.429-1.786a1 1 0 0 0-1.562-1.25l-1.43 1.787a5.037 5.037 0 0 0 .863 7.14Z"
+			fill="currentColor"
+		></path>
 	</svg>
 );
 
