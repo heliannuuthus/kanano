@@ -1,7 +1,7 @@
 import type { VirtualElement } from "@popperjs/core";
 import React from "react";
 
-import { Divider, Paper, Popper, ToggleButton } from "@mui/material";
+import { Divider, Paper, Popper } from "@mui/material";
 import {
 	FormatBold,
 	FormatItalic,
@@ -13,7 +13,7 @@ import { PatchToolTip } from "../PatchTooltip";
 import { Alignment } from "./Alignment";
 import { ColorFill } from "./ColorFill";
 import { FontSize } from "./FontSize";
-import { ToolBarButtonGroup } from "./ToggleButtonGroup";
+import { DivToggleButton, ToolBarButtonGroup } from "./ToggleButton";
 
 type ToolbarComponent = {
 	key: string;
@@ -95,7 +95,7 @@ export const Toolbar = ({
 							return component.key === "divider" ? (
 								component.icon
 							) : (
-								<ToggleButton
+								<DivToggleButton
 									value={component.key}
 									key={component.key}
 									aria-label={component.key}
@@ -103,12 +103,12 @@ export const Toolbar = ({
 									<PatchToolTip placement="top" title={component.tooltip} arrow>
 										{component.icon}
 									</PatchToolTip>
-								</ToggleButton>
+								</DivToggleButton>
 							);
 						})}
-						<ToggleButton selected={false} value="colorFilled">
+						<DivToggleButton selected={false} value="colorFilled">
 							<ColorFill />
-						</ToggleButton>
+						</DivToggleButton>
 					</ToolBarButtonGroup>
 				</Paper>
 			</div>

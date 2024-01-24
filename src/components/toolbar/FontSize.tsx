@@ -1,4 +1,4 @@
-import { MenuItem, ToggleButton } from "@mui/material";
+import { MenuItem } from "@mui/material";
 
 import { Box, styled } from "@mui/system";
 import { ReactElement, useState } from "react";
@@ -13,7 +13,7 @@ import {
 	FormatH6,
 	Text,
 } from "../Icons";
-import { ToolBarCombineButtonGroup } from "./ToggleButtonGroup";
+import { DivToggleButton, ToolBarCombineButtonGroup } from "./ToggleButton";
 
 const StyledMenuItem = styled(MenuItem)({
 	"&.MuiMenuItem-root": {
@@ -73,8 +73,8 @@ export const FontSize = () => {
 	return (
 		<>
 			<ToolBarCombineButtonGroup>
-				<ToggleButton value="fontsize" selected={false} disableRipple>
-					<Dropdown anchor={element}>
+				<DivToggleButton value="fontsize" selected={false} disableRipple>
+					<Dropdown anchor={element} placement="bottom-start">
 						{Object.values(FontSizes).map((fontsize: FontSizeType) => {
 							return (
 								<StyledMenuItem
@@ -109,7 +109,7 @@ export const FontSize = () => {
 							);
 						})}
 					</Dropdown>
-				</ToggleButton>
+				</DivToggleButton>
 			</ToolBarCombineButtonGroup>
 		</>
 	);

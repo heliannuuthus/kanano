@@ -1,14 +1,22 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { ClickAwayListener, Fade, Paper, Popper } from "@mui/material";
+import {
+	ClickAwayListener,
+	Fade,
+	Paper,
+	Popper,
+	PopperPlacementType,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { ReactElement, ReactNode, useRef, useState } from "react";
 
 export const Dropdown = ({
 	anchor,
 	children,
+	placement,
 }: {
 	anchor?: ReactElement | null;
 	children: ReactNode;
+	placement?: PopperPlacementType;
 }) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [iconSpin, setIconSpin] = useState<boolean>(false);
@@ -38,6 +46,7 @@ export const Dropdown = ({
 			<Popper
 				open={open}
 				anchorEl={anchorEl}
+				placement={placement}
 				modifiers={[
 					{
 						name: "offset",

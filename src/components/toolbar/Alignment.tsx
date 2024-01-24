@@ -10,7 +10,7 @@ import {
 	FormatAlignLeft,
 	FormatAlignRight,
 } from "../Icons";
-import { ToolBarCombineButtonGroup } from "./ToggleButtonGroup";
+import { ToolBarCombineButtonGroup } from "./ToggleButton";
 
 const StyledMenuItem = styled(MenuItem)({
 	"&.MuiMenuItem-root": {
@@ -64,7 +64,7 @@ export const Alignment = () => {
 					disableRipple
 					fullWidth
 				>
-					<Dropdown anchor={element}>
+					<Dropdown anchor={element} placement="bottom-start">
 						{Object.values(Alignments).map((alignment: AlignmentType) => {
 							return (
 								<StyledMenuItem

@@ -1,6 +1,6 @@
-import { Box, SvgIcon, ToggleButton, Typography } from "@mui/material";
+import { Box, SvgIcon, Typography } from "@mui/material";
 import { Dropdown } from "../Dropdown";
-import { ColorFillToggleButtonGroup } from "./ToggleButtonGroup";
+import { ColorFillToggleButtonGroup, DivToggleButton } from "./ToggleButton";
 
 const ColorFillIcon = ({
 	backgroundColor,
@@ -50,17 +50,17 @@ const pallet: Array<string> = [
 export const ColorFill = () => {
 	return (
 		<ColorFillToggleButtonGroup>
-			<ToggleButton value="colorFill">
+			<DivToggleButton value="colorFill">
 				<ColorFillIcon backgroundColor={"red"} color={"white"} />
-			</ToggleButton>
-			<ToggleButton value="colorFillDropDown">
+			</DivToggleButton>
+			<DivToggleButton value="colorFillDropDown">
 				<Dropdown
 					children={
 						<Box>
 							<Typography variant="body2">字体颜色</Typography>
 							<ColorFillToggleButtonGroup>
-								{pallet.map((color) => (
-									<ColorFillIcon color={color} />
+								{pallet.map((color, index) => (
+									<ColorFillIcon key={index} color={color} />
 								))}
 							</ColorFillToggleButtonGroup>
 							<div>123</div>
@@ -69,7 +69,7 @@ export const ColorFill = () => {
 						</Box>
 					}
 				/>
-			</ToggleButton>
+			</DivToggleButton>
 		</ColorFillToggleButtonGroup>
 	);
 };
